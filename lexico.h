@@ -14,20 +14,42 @@
 #include<string.h>
 #include<ctype.h>
 
+//------------------------------ Validaciones Sencillas --------------------------
+
 //Funcion para validar Parentesis
 int esParentesis(char ch);
 
-//Funcion para validad Operadores Aritmeticos de un solo caracter
-int esAritmetico(char ch);
+//Funcion para validar Corchetes
+int esCorchete(char ch);
+
+//Funcion para validar Llaves
+int esLlave(char ch);
 
 //Funcion para validad Booleanos de un solo caracter
 int esBooleano(char ch);
 
-//Funcion para validad Operadores Relacionales dentro de un buffer
+
+//---------------------------- Validaciones Con Buffer --------------------------
+
+//Funcion para validar Operadores Relacionales dentro de un buffer
 int esRelacional(char buffer[]);
 
-//Funcion para validad Palabras Reservadas dentro de un buffer
+//Funcion para validar Palabras Reservadas dentro de un buffer
 int esPalabraReservada(char buffer[]);
 
+//Funcion para validar Comentarios dentro de un buffer
+int esComentario(char buffer[]);
+
+//Funcion para validar Operadores Aritmeticos dentro de un buffer
+int esAritmetico(char buffer[]);
+
+
+//------------------------------- Funciones de Ayuda -----------------------------
+
+// Funcion para Imprimir Tokens en un buffer
+void imprimirToken(char buffer[], char tipo[]);
+
+// Funcion para Imprimir Tokens de un solo caracter
+void imprimirTokenCh(char ch, char tipo[]);
 
 #endif

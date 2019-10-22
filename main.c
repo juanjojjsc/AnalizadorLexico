@@ -19,27 +19,27 @@ int main(int argc, char **argv){
         exit(EXIT_FAILURE);
     }
 
-
-
-    char ch, buffer[15];
-    
-
-
-    FILE *fp;
+    //Variables
+    char ch; 
+    char buffer[15];
     int j=0;
-
-
-    fp = fopen(argv[1],"r");
+    int caracterSencilloFlag = 0;
     
-    if(fp == NULL){
+    FILE *archivo;
+    
+    //Abrir Archivo
+    archivo = fopen(argv[1],"r");
+    if(archivo == NULL){
         printf("Error al abrir el programa.\n");
         exit(0);
     } else {
         printf("Abriendo el programa: %s\n\n",argv[1]);
     }
     
-    int operadorFlag = 0;
-    while((ch = fgetc(fp)) != EOF){
+    
+    //Leer todos los caracteres del archivo
+    while((ch = fgetc(archivo)) != EOF){
+
         #ifdef DEBUG
             printf("Leyendo: %c\n",ch); 
         #endif
@@ -47,16 +47,27 @@ int main(int argc, char **argv){
 
 //////////////////////////////////////// CHECAR LOS TOKENS DE UN SOLO CARACTER, SIN CENTINELAS
 
-        operadorFlag = esParentesis(ch);
-        operadorFlag = esAritmetico(ch);
-        operadorFlag = esBooleano(ch);
+        caracterSencilloFlag = esParentesis(ch);
+        caracterSencilloFlag = esCorchete(ch);
+        caracterSencilloFlag = esLlave(ch);
+        caracterSencilloFlag = esBooleano(ch);
 
-    
 
-/////////////////////////////////////// USAR ESTE CHUNK PARA ALFANUMERICOS CON SENTINELA
 
-        //mientras siga habiendo un caracter, seguir metiendo en el buffer
-        if((isalnum(ch) || ch == '=' || ch == '<' || ch == '>' ) && !operadorFlag){
+
+/////////////////////////////////////// CHECAR TOKENS ALFANUMERICOS CON SENTINELA
+
+        //Mientras siga habiendo un caracter, seguir metiendo en el buffer
+
+        //Exepciones Alfanumericas que podrian conformar Tokens de mas de un caracter
+        if((isalnum(ch) || 
+            ch == '=' || 
+            ch == '<' || 
+            ch == '>' || 
+            ch == '+' || 
+            ch == '-' || 
+            ch == '*' || 
+            ch == '/' ) && !caracterSencilloFlag){
             
             #ifdef DEBUG
                 printf("Entro.  %c si fue alfanum, seguimos checando...\n",ch); 
@@ -69,14 +80,14 @@ int main(int argc, char **argv){
             #endif
             
         }
-        //cuando ya no encuentre otro caracter, terminar e identificar el buffer
-        else if((ch == ' ' || ch == '\n' || ch == ';') && (j != 0) && !operadorFlag){
+        //Cuando encuentra un espacio o terminador, terminar e identificar que fue el buffer
+        else if((ch == ' ' || ch == '\n' || ch == ';') && (j != 0) && !caracterSencilloFlag){
             
             #ifdef DEBUG
                 printf("Entro. Espacio Encontrado, determinar que fue\n");
             #endif
 
-            //Le mete al buffer un EOL para indicar que ya encontro un espacio o ;
+            //Le mete al buffer un EOL para indicar que ya encontro un espacio o terminador
             buffer[j] = '\0';
             j = 0;
 
@@ -87,20 +98,27 @@ int main(int argc, char **argv){
                 printf("Evaluando buffer: %s\n",buffer);
             #endif
 
+            //Identificar el buffer utilizando funciones de evaluacion
+
             if(esPalabraReservada(buffer) == 1)
-                printf("FOUND: %s is PALABRA RESERVADA\n\n", buffer);
+                imprimirToken(buffer,"Palabra Reservada");
             else if (esRelacional(buffer)==1)
-                printf("FOUND: %s is RELACIONAL COMPUESTO\n\n", buffer);
+                imprimirToken(buffer,"Operador Relacional");
+            else if (esAritmetico(buffer)==1)
+                imprimirToken(buffer,"Operador Aritmetico");
+            else if (esComentario(buffer)==1)
+                imprimirToken(buffer,"Comentario");
             else if (!strcmp(buffer,"="))
-                printf("FOUND: %s is ASIGNACION\n\n", buffer);
-            else printf("FOUND: %s is IDENTIFICADOR\n\n", buffer);
+                imprimirToken(buffer,"Asignacion");
+            else imprimirToken(buffer,"Identificador");
         
         }
-        operadorFlag = 0;
+        //Terminar la iteracion
+        caracterSencilloFlag = 0;
         
     }
-    
-    fclose(fp);
+    //Cerrar Archivo
+    fclose(archivo);
     
     return 0;
 }

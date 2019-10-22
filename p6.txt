@@ -1,0 +1,3 @@
+entero a = 5;
+booleano b = V;
+real c = 3.5;

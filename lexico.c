@@ -9,63 +9,60 @@
 #include "lexico.h"
 
 
-const int keywordsNumber = 32;
-const int palabrasReservadasNumero = 10;
-const int opRelacionalesNumero = 6;
 const int palabraLength = 10;
 
 
-char operadoresRelacionales[] = "<>!";
-char operadoresAritmeticos[] = "+-*/%";
-char operadoresIncrementales[] = "++ --";
-char operadoresBooleanos[] = "VF";
-char operadoresRelacionalesSencillos[] = "<>";
-int relacionalesSencillosLength = 2;
-int aritmeticosLenght = 5;
-int relacionalesLength = 3;
-int booleanosLength = 2;
-
+//------------------------------ Validaciones Sencillas --------------------------
 
 //Checar Parentesis
 int esParentesis(char ch){
     if(ch == '(' || ch == ')') {
-        
-        printf("FOUND: PARENTESIS: %c\n\n",ch);
+        imprimirTokenCh(ch,"Parentesis");
         return 1;
     }
     return 0;
 }
 
-//Checar Operadores Aritmeticos
-int esAritmetico(char ch){
-    for(int i = 0; i < aritmeticosLenght; ++i){
-        if(ch == operadoresAritmeticos[i]) {
-            //Decir que ya terminamos este chequeo, no es necesario seguir checando
-            printf("FOUND: OP ARITMETICO: %c\n\n",ch);
-            return 1;
-        }
+//Checar Llaves
+int esLlave(char ch){
+    if(ch == '{' || ch == '}') {
+        imprimirTokenCh(ch,"Llave");
+        return 1;
+    }
+    return 0;
+}
+
+//Checar Corchetes
+int esCorchete(char ch){
+    if(ch == '[' || ch == ']') {
+        imprimirTokenCh(ch,"Corchete");
+        return 1;
     }
     return 0;
 }
 
 //Checar Booleanos
 int esBooleano(char ch){
-    for(int i = 0; i < booleanosLength; ++i){
+    char operadoresBooleanos[] = "VF";
+    for(int i = 0; i < 2; ++i){
         if(ch == operadoresBooleanos[i]) {
-            //Decir que ya terminamos este chequeo, no es necesario seguir checando
-            printf("FOUND: BOOLEANO: %c\n\n",ch);
+            imprimirTokenCh(ch,"Booleano");
             return 1;
         }
     }
     return 0;
 }
 
+//---------------------------- Validaciones Con Buffer --------------------------
 
 //Checar Operadores Relacionales
 int esRelacional(char buffer[]){
 
-    printf("Entramos al chequeo relacional\n");
-    char operadoresRelacionales[opRelacionalesNumero][palabraLength] = {
+    #ifdef DEBUG
+        printf("Entramos al chequeo relacional\n"); 
+    #endif
+
+    char operadoresRelacionales[6][palabraLength] = {
         "<=",
         ">=",
         "==",
@@ -77,25 +74,93 @@ int esRelacional(char buffer[]){
     int i = 0;
     int flag = 0;
     
-    for(i = 0; i < opRelacionalesNumero; ++i){
+    for(i = 0; i < 6; ++i){
         if(strcmp(operadoresRelacionales[i], buffer) == 0){
             flag = 1;
             break;
         }
     }
-    printf("Resultado chequeo relacional: %d\n",flag);
+
+    #ifdef DEBUG
+        printf("Resultado chequeo relacional: %d\n",flag);
+    #endif
+
+    
     return flag;
 }
 
+
+//Checar Operadores Incrementales
+int esAritmetico(char buffer[]){
+
+    #ifdef DEBUG
+        printf("Entramos al chequeo aritmetico\n"); 
+    #endif
+
+    char operadoresAritmeticos[8][palabraLength] = {
+        "++",
+        "--",
+        "**",
+        "+",
+        "-",
+        "*",
+        "/",
+        "%"
+    };
+
+    int i = 0;
+    int flag = 0;
+    
+    for(i = 0; i < 8; ++i){
+        if(strcmp(operadoresAritmeticos[i], buffer) == 0){
+            flag = 1;
+            break;
+        }
+    }
+
+    #ifdef DEBUG
+        printf("Resultado chequeo aritmetico: %d\n",flag);
+    #endif
+
+    
+    return flag;
+}
+
+
+//Checar Comentarios
+int esComentario(char buffer[]){
+
+    #ifdef DEBUG
+        printf("Entramos al chequeo de comentatios\n"); 
+    #endif
+
+    char comentarios[1][palabraLength] = {
+        "//"
+    };
+
+    int i = 0;
+    int flag = 0;
+    
+    for(i = 0; i < 1; ++i){
+        if(strcmp(comentarios[i], buffer) == 0){
+            flag = 1;
+            break;
+        }
+    }
+
+    #ifdef DEBUG
+        printf("Resultado chequeo comentarios: %d\n",flag);
+    #endif
+
+    
+    return flag;
+}
+
+
+//Checar Palabras Reservadas
 int esPalabraReservada(char buffer[]){
 
-    // char keywords[keywordsNumber][palabraLength] = {"auto","break","case","char","const","continue","default",
-    //     "do","double","else","enum","extern","float","for","goto",
-    //     "if","int","long","register","return","short","signed",
-    //     "sizeof","static","struct","switch","typedef","union",
-    //     "unsigned","void","volatile","while"};
-
-    char palabrasReservadas[palabrasReservadasNumero][palabraLength] = {
+    char palabrasReservadas[15][palabraLength] = {
         "programa",
         "si",
         "sino",
@@ -105,13 +170,18 @@ int esPalabraReservada(char buffer[]){
         "ciclo",
         "mientras",
         "hacer",
+        "variable",
+        "caracter",
+        "entero",
+        "real",
+        "booleano",
         "fin"
     };
 
     int i = 0;
     int flag = 0;
     
-    for(i = 0; i < keywordsNumber; ++i){
+    for(i = 0; i < 15; ++i){
         if(strcmp(palabrasReservadas[i], buffer) == 0){
             flag = 1;
             break;
@@ -122,4 +192,14 @@ int esPalabraReservada(char buffer[]){
 }
 
 
+//------------------------------- Funciones de Ayuda -----------------------------
 
+// Funcion para Imprimir Tokens de un bufffer
+void imprimirToken(char buffer[], char tipo[]){
+    printf("<%s, %s>\n",tipo,buffer);
+}
+
+// Funcion para Imprimir Tokens de un bufffer
+void imprimirTokenCh(char ch, char tipo[]){
+    printf("<%s, %c>\n",tipo,ch);
+}
