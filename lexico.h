@@ -51,8 +51,11 @@ int esNumero(char buffer[]);
 
 //------------------------------- Automatas --------------------------------------
 
-//Funcion para Imprimir Tokens de un buffer utilizando un automata
+//Funcion para Imprimir Tokens de Operadores Relacionales dentro de un buffer utilizando un automata
 char* automataOpRelacionales(char buffer[]);
+
+//Funcion para Imprimir Tokens de Numeros dentro de un buffer utilizando un automata
+char* automataNumeros(char buffer[]);
 
 
 //------------------------------- Funciones de Ayuda -----------------------------
