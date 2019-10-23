@@ -14,6 +14,7 @@ const int palabraLength = 10;
 
 //------------------------------ Validaciones Sencillas --------------------------
 
+
 //Checar Parentesis
 int esParentesis(char ch){
     if(ch == '(' || ch == ')') {
@@ -66,7 +67,7 @@ int esRelacional(char buffer[]){
         "<=",
         ">=",
         "==",
-        "!=",
+        "<>",
         "<",
         ">"
     };
@@ -189,6 +190,158 @@ int esPalabraReservada(char buffer[]){
     }
     
     return flag;
+}
+
+//Checar Numeros
+int esNumero(char buffer[]){
+    if (isdigit(buffer[0])) return 1;
+    return 0;
+}
+
+
+//-------------------------------- Automatas para determinar Tokens ---------------
+
+//Funcion para Imprimir Tokens de Operadores Relacionales, dentro de un buffer utilizando un automata
+char* automataOpRelacionales(char buffer[]){
+    #ifdef DEBUG
+        printf("Entro a funcion automata Op Relacional\n");
+    #endif
+    
+    int estado = 0;
+    int j = 0;
+    char ch;
+    
+    
+    while (1) 
+    {
+        switch (estado)
+        {
+        case 0:
+            ch = buffer[0];
+            #ifdef DEBUG
+                printf("Evaluando: %c\n",ch);
+            #endif
+            if (ch == '<') estado = 1;
+            else if (ch == '=') estado = 5;
+            else if (ch == '>') estado = 6;
+            break;
+        case 1:
+            j++;
+            ch = buffer[j];
+            #ifdef DEBUG
+                printf("Evaluando el siguiente: %c\n",ch);
+            #endif
+            if (ch == '=') estado = 2;
+            else if (ch == '>') estado = 3;
+            else estado = 4;
+            break;
+        case 2:
+            return "LE";
+            break;
+        case 3:
+            return "NE";
+            break;
+        case 4:
+            return "LT";
+            break;
+        case 5:
+            return "EQ";
+            break;
+        case 6:
+            j++;
+            ch = buffer[j];
+            #ifdef DEBUG
+                printf("Evaluando el siguiente: %c\n",ch);
+            #endif
+            if (ch == '=') estado = 7;
+            else estado = 8;
+            break;
+        case 7:
+            return "GE";
+            break;
+        case 8:
+            return "GT";
+            break;
+    
+        default:
+            break;
+        }
+
+    }
+    return "";
+    
+}
+
+
+//Funcion para Imprimir Tokens de Numeros, dentro de un buffer utilizando un automata
+char* automataNumeros(char buffer[]){
+    #ifdef DEBUG
+        printf("Entro a funcion automata Op Relacional\n");
+    #endif
+    
+    int estado = 0;
+    int j = 0;
+    char ch;
+    
+    
+    while (1) 
+    {
+        switch (estado)
+        {
+        case 0:
+            ch = buffer[0];
+            #ifdef DEBUG
+                printf("Evaluando: %c\n",ch);
+            #endif
+            if (ch == '<') estado = 1;
+            else if (ch == '=') estado = 5;
+            else if (ch == '>') estado = 6;
+            break;
+        case 1:
+            j++;
+            ch = buffer[j];
+            #ifdef DEBUG
+                printf("Evaluando el siguiente: %c\n",ch);
+            #endif
+            if (ch == '=') estado = 2;
+            else if (ch == '>') estado = 3;
+            else estado = 4;
+            break;
+        case 2:
+            return "LE";
+            break;
+        case 3:
+            return "NE";
+            break;
+        case 4:
+            return "LT";
+            break;
+        case 5:
+            return "EQ";
+            break;
+        case 6:
+            j++;
+            ch = buffer[j];
+            #ifdef DEBUG
+                printf("Evaluando el siguiente: %c\n",ch);
+            #endif
+            if (ch == '=') estado = 7;
+            else estado = 8;
+            break;
+        case 7:
+            return "GE";
+            break;
+        case 8:
+            return "GT";
+            break;
+    
+        default:
+            break;
+        }
+
+    }
+    return "";
+    
 }
 
 

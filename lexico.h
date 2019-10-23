@@ -29,6 +29,7 @@ int esLlave(char ch);
 int esBooleano(char ch);
 
 
+
 //---------------------------- Validaciones Con Buffer --------------------------
 
 //Funcion para validar Operadores Relacionales dentro de un buffer
@@ -42,6 +43,16 @@ int esComentario(char buffer[]);
 
 //Funcion para validar Operadores Aritmeticos dentro de un buffer
 int esAritmetico(char buffer[]);
+
+//Funcion para validar Numeros dentro de un buffer
+int esNumero(char buffer[]);
+
+
+
+//------------------------------- Automatas --------------------------------------
+
+//Funcion para Imprimir Tokens de un buffer utilizando un automata
+char* automataOpRelacionales(char buffer[]);
 
 
 //------------------------------- Funciones de Ayuda -----------------------------

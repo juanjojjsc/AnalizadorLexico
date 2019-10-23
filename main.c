@@ -66,7 +66,8 @@ int main(int argc, char **argv){
             ch == '>' || 
             ch == '+' || 
             ch == '-' || 
-            ch == '*' || 
+            ch == '*' ||
+            ch == '.' || 
             ch == '/' ) && !caracterSencilloFlag){
             
             #ifdef DEBUG
@@ -102,14 +103,26 @@ int main(int argc, char **argv){
 
             if(esPalabraReservada(buffer) == 1)
                 imprimirToken(buffer,"Palabra Reservada");
-            else if (esRelacional(buffer)==1)
-                imprimirToken(buffer,"Operador Relacional");
-            else if (esAritmetico(buffer)==1)
+            else if (esRelacional(buffer)==1){
+                //Que tipo de Operador Relacional es usando un automata de estados
+                const char* token = automataOpRelacionales(buffer);
+                //Imprimir el Token
+                printf("<OP Relacional, %s>\n",token);
+            }
+            else if (esAritmetico(buffer)==1){
+            
                 imprimirToken(buffer,"Operador Aritmetico");
+            }
             else if (esComentario(buffer)==1)
                 imprimirToken(buffer,"Comentario");
             else if (!strcmp(buffer,"="))
                 imprimirToken(buffer,"Asignacion");
+            else if (esNumero(buffer)==1){
+                printf("Si es numero!!! : %s\n",buffer);
+                const char* token = automataNumeros(buffer);
+                //Imprimir el Token
+                printf("<TIPO, %s>\n",token);
+            }
             else imprimirToken(buffer,"Identificador");
         
         }
