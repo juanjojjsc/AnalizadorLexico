@@ -293,9 +293,10 @@ char* automataNumeros(char buffer[]){
             #ifdef DEBUG
                 printf("Evaluando: %c\n",ch);
             #endif
-            if (ch == '<') estado = 1;
-            else if (ch == '=') estado = 5;
-            else if (ch == '>') estado = 6;
+            if (isdigit(ch)) estado = 1;
+            // else if (ch == '=') estado = 5;
+            // else if (ch == '>') estado = 6;
+            else return "";
             break;
         case 1:
             j++;
@@ -303,38 +304,26 @@ char* automataNumeros(char buffer[]){
             #ifdef DEBUG
                 printf("Evaluando el siguiente: %c\n",ch);
             #endif
-            if (ch == '=') estado = 2;
-            else if (ch == '>') estado = 3;
-            else estado = 4;
+            if (isdigit(ch)) estado = 1;
+            else if (ch == '.') estado = 2;
+            else if (ch == ' ' || ch == ';' || ch == '\n') estado = 3;
             break;
         case 2:
-            return "LE";
-            break;
-        case 3:
-            return "NE";
-            break;
-        case 4:
-            return "LT";
-            break;
-        case 5:
-            return "EQ";
-            break;
-        case 6:
             j++;
             ch = buffer[j];
             #ifdef DEBUG
-                printf("Evaluando el siguiente: %c\n",ch);
+                printf("Encontro punto, evaluando el siguiente: %c\n",ch);
             #endif
-            if (ch == '=') estado = 7;
-            else estado = 8;
+            if (isdigit(ch)) estado = 2;
+            else if (ch == ' ' || ch == ';' || ch == '\n') estado = 4;
             break;
-        case 7:
-            return "GE";
+        case 3:
+            return "Entero";
             break;
-        case 8:
-            return "GT";
+        case 4:
+            return "Real";
             break;
-    
+        
         default:
             break;
         }

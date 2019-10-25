@@ -1,3 +1,3 @@
-entero a = 52.12;
+entero a = 5212;
 booleano b = V;
 real c = 3.5;

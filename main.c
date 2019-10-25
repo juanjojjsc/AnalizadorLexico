@@ -15,7 +15,7 @@ int main(int argc, char **argv){
     if (argc < 2) 
     {
         printf("\tFavor de pasar el nombre del programa a analizar como argumento.\n");
-        printf("\tEjemplo: ./lexico programa.txt\n");
+        printf("\tEjemplo: ./analizador programa.txt\n");
         exit(EXIT_FAILURE);
     }
 
@@ -118,10 +118,9 @@ int main(int argc, char **argv){
             else if (!strcmp(buffer,"="))
                 imprimirToken(buffer,"Asignacion");
             else if (esNumero(buffer)==1){
-                printf("Si es numero!!! : %s\n",buffer);
                 const char* token = automataNumeros(buffer);
                 //Imprimir el Token
-                printf("<TIPO, %s>\n",token);
+                printf("<Tipo, %s>\n",token);
             }
             else imprimirToken(buffer,"Identificador");
         

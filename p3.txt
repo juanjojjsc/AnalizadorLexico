@@ -1,6 +1,6 @@
-
-mientras (V)
+hacer
 {
     a ++;
     b <= c;
 }
+mientras (a < 10);
