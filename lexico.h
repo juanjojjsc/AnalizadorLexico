@@ -76,7 +76,7 @@ void imprimirTokenCh(char ch, char tipo[]);
 void insertarRegistro(char symbol[], char type[], int addr);
 
 // Funcion para mostrar todos los registros de la Tabla de Simbolos
-void imprimirTabla();
+void imprimirListaLigada();
 
 // Funcion de busqueda de registros de la Tabla de Simbolos
 int buscaRegistro(char symbol[]);

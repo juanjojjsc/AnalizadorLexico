@@ -126,7 +126,6 @@ int main(int argc, char **argv) {
                 printf("<OP Relacional, %s>\n",token);
             }
             else if (esAritmetico(buffer)==1){
-            
                 imprimirToken(buffer,"Operador Aritmetico");
             }
             else if (esComentario(buffer)==1)
@@ -141,7 +140,8 @@ int main(int argc, char **argv) {
             else {
                 printf("<Identificador, %d>\n",idNumero);
                 insertarRegistro(buffer,"Identificador",idNumero);
-                imprimirTabla();
+                imprimirListaLigada();
+                printf("\n");
                 idNumero++;
             } 
         
@@ -160,39 +160,36 @@ int main(int argc, char **argv) {
 //-------------------------------- Funciones de la Tabla de Simbolos ---------------
 
 
+// Funcion para insertar un nuevo registro en la Tabla de Simbolos
 void insertarRegistro(char symbol[], char type[], int addr){
+    
+    //Llamar funcion buscaRegistro para asegurar que no haya repeticion
     int n;
-    //char l[20];
-    // printf("\n\tEnter the symbol : ");
-    // scanf("%s",l);
     n = buscaRegistro(symbol);
     if(n==1)
         printf("\n\tERROR: REGISTRO DUPLICADO\n");
     else
     {
         
+        //Instanciar Tabla
         struct TablaSimbolos *p;
-
+        //Reservar memoria
         p=malloc(sizeof(struct TablaSimbolos));
+
+        //Cargar datos a la estructura
         strcpy(p->symbol,symbol);
-        // printf("\n\tEnter the type : ");
-        // scanf("%s",p->type);
         strcpy(p->type,type);
         p->addr = addr;
-        // printf("\n\tEnter the value : ");
-        // scanf("%s",p->value);
-        // printf("\n\tEnter the address : ");
-        // scanf("%d",&p->addr);
-        //strcpy(p->addr,&p);
-        // p->addr = &p;
-
-
+    
+        //Ajustar los apuntadores de la Lista Ligada
         p->next=NULL;
+        //Si la lista esta vacia
         if(size==0)
         {
             first=p;
             last=p;
         }
+        //Si la lista no esta vacia, reajustar los apuntadores para incrementar
         else
         {
             last->next=p;
@@ -202,11 +199,12 @@ void insertarRegistro(char symbol[], char type[], int addr){
         size++;
     }
     #ifdef DDEBUG
-        printf("\nINSERTADO\n");
+        printf("\n REGISTRO INSERTADO\n");
     #endif
 }
 
-void imprimirTabla()
+// Funcion para mostrar todos los registros de la Tabla de Simbolos
+void imprimirListaLigada()
 {
     int i;
     struct TablaSimbolos *p;
@@ -214,21 +212,22 @@ void imprimirTabla()
     #ifdef DDEBUG
         printf("Current Address: %p\n",&p);
     #endif
-    // printf("\n\tTYPE\t\tSYMBOL\t\tADDRESS\t\t\tVALUE\n");
-    printf("\n\tTYPE\t\t\tSYMBOL\t\t\tADDRESS\n");
+    printf("\n\tADDRESS\t\tSYMBOL\t\tTYPE\n");
+    //Recorrer cada elemento de la lista ligada e imprimir sus atributos
     for(i=0;i<size;i++)
     {
-        printf("\t%s\t\t%s\t\t%d\n",p->type,p->symbol,p->addr);
+        printf("\t%d\t\t%s\t\t%s\n",p->addr,p->symbol,p->type);
         p=p->next;
     }
 }
 
-
+// Funcion de busqueda de registros de la Tabla de Simbolos
 int buscaRegistro(char symbol[])
 {
     int i,flag=0;
     struct TablaSimbolos *p;
     p=first;
+    //Iterar cada elemento de la lista ligada y compara el parametro ingresado con el atributo deseado
     for(i=0;i<size;i++)
     {
         if(strcmp(p->symbol,symbol)==0)
