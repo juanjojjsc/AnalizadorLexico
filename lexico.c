@@ -161,7 +161,11 @@ int esComentario(char buffer[]){
 //Checar Palabras Reservadas
 int esPalabraReservada(char buffer[]){
 
-    char palabrasReservadas[15][palabraLength] = {
+    #ifdef DEBUG
+        printf("ENTRAMOS A esPalabraReservada CON: %s\n",buffer);
+    #endif
+
+    char palabrasReservadas[16][palabraLength] = {
         "programa",
         "si",
         "sino",
@@ -176,13 +180,14 @@ int esPalabraReservada(char buffer[]){
         "entero",
         "real",
         "booleano",
-        "fin"
+        "fin",
+        "funcion"
     };
 
     int i = 0;
     int flag = 0;
     
-    for(i = 0; i < 15; ++i){
+    for(i = 0; i < 16; ++i){
         if(strcmp(palabrasReservadas[i], buffer) == 0){
             flag = 1;
             break;
