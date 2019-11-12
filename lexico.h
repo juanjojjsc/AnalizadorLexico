@@ -9,11 +9,10 @@
 #ifndef lexico_h
 #define lexico_h
 
-#include<stdio.h>
-#include<stdlib.h>
-#include<string.h>
-#include<ctype.h>
-#include<curses.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
 
 //------------------------------ Validaciones Sencillas --------------------------
 
