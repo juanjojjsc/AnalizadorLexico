@@ -8,8 +8,23 @@
 
 #include "lexico.h"
 
+//Estructura para cada elemento de la Lista Ligada
+struct TablaSimbolos
+{
+    char type[20];
+    char symbol[20];
+    char value[20];
+    int* addr;
+    //Apuntador al siguiente elemento de la Lista Ligada
+    struct TablaSimbolos *next;
+};
 
-int main(int argc, char **argv){
+//Apuntadores a primer y ultimo nodo de la Lista Ligada
+struct TablaSimbolos *first,*last;
+int size = 0;
+
+
+int main(int argc, char **argv) {
 
     // Checar que si se haya pasado el argumento
     if (argc < 2) 
@@ -101,7 +116,7 @@ int main(int argc, char **argv){
 
             //Identificar el buffer utilizando funciones de evaluacion
 
-            if(esPalabraReservada(buffer) == 1)
+            if(esPalabraReservada(buffer) == 1) 
                 imprimirToken(buffer,"Palabra Reservada");
             else if (esRelacional(buffer)==1){
                 //Que tipo de Operador Relacional es usando un automata de estados
@@ -122,7 +137,11 @@ int main(int argc, char **argv){
                 //Imprimir el Token
                 printf("<Tipo, %s>\n",token);
             }
-            else imprimirToken(buffer,"Identificador");
+            else {
+                imprimirToken(buffer,"Identificador");
+                insertarRegistro(buffer,"Identificador");
+                imprimirTabla();
+            } 
         
         }
         //Terminar la iteracion
@@ -133,4 +152,81 @@ int main(int argc, char **argv){
     fclose(archivo);
     
     return 0;
+}
+
+void insertarRegistro(char symbol[], char type[]){
+    int n;
+    //char l[20];
+    // printf("\n\tEnter the symbol : ");
+    // scanf("%s",l);
+    n = buscaRegistro(symbol);
+    if(n==1)
+        printf("\n\tERROR: REGISTRO DUPLICADO\n");
+    else
+    {
+        
+        struct TablaSimbolos *p;
+
+        p=malloc(sizeof(struct TablaSimbolos));
+        strcpy(p->symbol,symbol);
+        // printf("\n\tEnter the type : ");
+        // scanf("%s",p->type);
+        strcpy(p->type,type);
+        // printf("\n\tEnter the value : ");
+        // scanf("%s",p->value);
+        // printf("\n\tEnter the address : ");
+        // scanf("%d",&p->addr);
+        //strcpy(p->addr,&p);
+        // p->addr = &p;
+
+
+        p->next=NULL;
+        if(size==0)
+        {
+            first=p;
+            last=p;
+        }
+        else
+        {
+            last->next=p;
+            last=p;
+        }
+
+        size++;
+    }
+    #ifdef DDEBUG
+        printf("\nINSERTADO\n");
+    #endif
+}
+
+void imprimirTabla()
+{
+    int i;
+    struct TablaSimbolos *p;
+    p=first;
+    #ifdef DDEBUG
+        printf("Current Address: %p\n",&p);
+    #endif
+    // printf("\n\tTYPE\t\tSYMBOL\t\tADDRESS\t\t\tVALUE\n");
+    printf("\n\tTYPE\t\t\tSYMBOL\t\t\tADDRESS\n");
+    for(i=0;i<size;i++)
+    {
+        printf("\t%s\t\t%s\t\t%p\n",p->type,p->symbol,&p->next);
+        p=p->next;
+    }
+}
+
+
+int buscaRegistro(char symbol[])
+{
+    int i,flag=0;
+    struct TablaSimbolos *p;
+    p=first;
+    for(i=0;i<size;i++)
+    {
+        if(strcmp(p->symbol,symbol)==0)
+            flag=1;
+        p=p->next;
+    }
+    return flag;
 }

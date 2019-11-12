@@ -13,6 +13,7 @@
 #include<stdlib.h>
 #include<string.h>
 #include<ctype.h>
+#include<curses.h>
 
 //------------------------------ Validaciones Sencillas --------------------------
 
@@ -67,3 +68,16 @@ void imprimirToken(char buffer[], char tipo[]);
 void imprimirTokenCh(char ch, char tipo[]);
 
 #endif
+
+
+//-------------------------------- Funciones de la Tabla de Simbolos ---------------
+
+// Funcion para insertar un nuevo registro en la Tabla de Simbolos
+void insertarRegistro(char symbol[], char type[]);
+
+// Funcion para mostrar todos los registros de la Tabla de Simbolos
+void imprimirTabla();
+
+// Funcion de busqueda de registros de la Tabla de Simbolos
+int buscaRegistro(char symbol[]);
+
