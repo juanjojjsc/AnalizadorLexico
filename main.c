@@ -14,7 +14,7 @@ struct TablaSimbolos
     char type[20];
     char symbol[20];
     char value[20];
-    int* addr;
+    int addr;
     //Apuntador al siguiente elemento de la Lista Ligada
     struct TablaSimbolos *next;
 };
@@ -39,6 +39,7 @@ int main(int argc, char **argv) {
     char buffer[15];
     int j=0;
     int caracterSencilloFlag = 0;
+    int idNumero = 1;
     
     FILE *archivo;
     
@@ -138,9 +139,10 @@ int main(int argc, char **argv) {
                 printf("<Tipo, %s>\n",token);
             }
             else {
-                imprimirToken(buffer,"Identificador");
-                insertarRegistro(buffer,"Identificador");
+                printf("<Identificador, %d>\n",idNumero);
+                insertarRegistro(buffer,"Identificador",idNumero);
                 imprimirTabla();
+                idNumero++;
             } 
         
         }
@@ -154,7 +156,11 @@ int main(int argc, char **argv) {
     return 0;
 }
 
-void insertarRegistro(char symbol[], char type[]){
+
+//-------------------------------- Funciones de la Tabla de Simbolos ---------------
+
+
+void insertarRegistro(char symbol[], char type[], int addr){
     int n;
     //char l[20];
     // printf("\n\tEnter the symbol : ");
@@ -172,6 +178,7 @@ void insertarRegistro(char symbol[], char type[]){
         // printf("\n\tEnter the type : ");
         // scanf("%s",p->type);
         strcpy(p->type,type);
+        p->addr = addr;
         // printf("\n\tEnter the value : ");
         // scanf("%s",p->value);
         // printf("\n\tEnter the address : ");
@@ -211,7 +218,7 @@ void imprimirTabla()
     printf("\n\tTYPE\t\t\tSYMBOL\t\t\tADDRESS\n");
     for(i=0;i<size;i++)
     {
-        printf("\t%s\t\t%s\t\t%p\n",p->type,p->symbol,&p->next);
+        printf("\t%s\t\t%s\t\t%d\n",p->type,p->symbol,p->addr);
         p=p->next;
     }
 }

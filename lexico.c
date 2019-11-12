@@ -351,7 +351,3 @@ void imprimirTokenCh(char ch, char tipo[]){
     printf("<%s, %c>\n",tipo,ch);
 }
 
-
-
-//-------------------------------- Funciones de la Tabla de Simbolos ---------------
-
