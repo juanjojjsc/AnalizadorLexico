@@ -166,7 +166,7 @@ int esPalabraReservada(char buffer[]){
     #endif
 
     char palabrasReservadas[16][palabraLength] = {
-        "programa",
+        "inicio",
         "si",
         "sino",
         "casos",

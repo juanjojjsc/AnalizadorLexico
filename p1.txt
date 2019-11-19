@@ -1,4 +1,4 @@
-programa
+inicio
 
     a = 1;
 

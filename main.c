@@ -23,6 +23,15 @@ struct TablaSimbolos
 struct TablaSimbolos *first,*last;
 int size = 0;
 
+//Variables
+    char ch;
+    int next = 0; 
+    char buffer[15];
+    char data[255];
+    int j=0;
+    int caracterSencilloFlag = 0;
+    int idNumero = 1;
+
 
 int main(int argc, char **argv) {
 
@@ -34,12 +43,7 @@ int main(int argc, char **argv) {
         exit(EXIT_FAILURE);
     }
 
-    //Variables
-    char ch; 
-    char buffer[15];
-    int j=0;
-    int caracterSencilloFlag = 0;
-    int idNumero = 1;
+    
     
     FILE *archivo;
     
@@ -51,12 +55,57 @@ int main(int argc, char **argv) {
     } else {
         printf("Abriendo el programa: %s\n\n",argv[1]);
     }
-    
-    
-    //Leer todos los caracteres del archivo
-    while((ch = fgetc(archivo)) != EOF){
 
-        #ifdef DEBUG
+    // for (int i = 0; i < 50; i++)
+    // {
+    //     // if(data[i] == '')
+    //     fscanf(archivo, "%c", &data[i]);
+    // }
+
+    // for (int i = 0; i < 50; i++)
+    // {
+    //     printf("data: %c\n", data[i]);
+    // }
+
+    int fileIndex = 0;
+    int fileLenght = 0;
+    while((fscanf(archivo, "%c", &data[fileLenght])) != EOF) {
+        printf("Data[%d]: %c\n",fileLenght,data[fileLenght]);
+        fileLenght++;
+    }
+
+
+
+
+    printf("File Lenght: %d\n",fileLenght);
+    
+    // //Leer todos los caracteres del archivo
+    // while((ch = fgetc(archivo)) != EOF){
+
+
+        
+        
+    // }
+
+    daToken(fileIndex);
+
+
+
+
+    //Cerrar Archivo
+    fclose(archivo);
+    
+    return 0;
+}
+
+
+
+
+
+
+void daToken(int i) {
+
+    #ifdef DEBUG
             printf("Leyendo: %c\n",ch); 
         #endif
 
@@ -68,6 +117,8 @@ int main(int argc, char **argv) {
         caracterSencilloFlag = esLlave(ch);
         caracterSencilloFlag = esBooleano(ch);
 
+        if (caracterSencilloFlag) 
+            scanf("%d",&next);
 
 
 
@@ -117,44 +168,46 @@ int main(int argc, char **argv) {
 
             //Identificar el buffer utilizando funciones de evaluacion
 
-            if(esPalabraReservada(buffer) == 1) 
+            if(esPalabraReservada(buffer) == 1) {
                 imprimirToken(buffer,"Palabra Reservada");
-            else if (esRelacional(buffer)==1){
+                scanf("%d",&next);
+
+            } else if (esRelacional(buffer)==1) {
                 //Que tipo de Operador Relacional es usando un automata de estados
                 const char* token = automataOpRelacionales(buffer);
                 //Imprimir el Token
                 printf("<OP Relacional, %s>\n",token);
-            }
-            else if (esAritmetico(buffer)==1){
+                scanf("%d",&next);
+            } else if (esAritmetico(buffer)==1) {
                 imprimirToken(buffer,"Operador Aritmetico");
-            }
-            else if (esComentario(buffer)==1)
+                scanf("%d",&next);
+            } else if (esComentario(buffer)==1) {
                 imprimirToken(buffer,"Comentario");
-            else if (!strcmp(buffer,"="))
+                scanf("%d",&next);
+            } else if (!strcmp(buffer,"=")) {
                 imprimirToken(buffer,"Asignacion");
-            else if (esNumero(buffer)==1){
+                scanf("%d",&next);
+            } else if (esNumero(buffer)==1) {
                 const char* token = automataNumeros(buffer);
                 //Imprimir el Token
                 printf("<Tipo, %s>\n",token);
-            }
-            else {
+                scanf("%d",&next);
+            } else {
                 printf("<Identificador, %d>\n",idNumero);
                 insertarRegistro(buffer,"Identificador",idNumero);
                 imprimirListaLigada();
                 printf("\n");
                 idNumero++;
+                scanf("%d",&next);
             } 
         
         }
         //Terminar la iteracion
         caracterSencilloFlag = 0;
-        
-    }
-    //Cerrar Archivo
-    fclose(archivo);
-    
-    return 0;
+
 }
+
+
 
 
 //-------------------------------- Funciones de la Tabla de Simbolos ---------------
