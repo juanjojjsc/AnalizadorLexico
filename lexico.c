@@ -15,6 +15,16 @@ const int palabraLength = 10;
 //------------------------------ Validaciones Sencillas --------------------------
 
 
+//Checar Simbolos
+int esSimbolo(char ch){
+    if(ch == '(' || ch == ')' || ch == '{' || ch == '}' || ch == '[' || ch == ']' || ch == 'V' || ch == 'F') {
+        imprimirTokenCh(ch,"SIMBOLO");
+        return 1;
+    }
+    return 0;
+}
+
+
 //Checar Parentesis
 int esParentesis(char ch){
     if(ch == '(' || ch == ')') {

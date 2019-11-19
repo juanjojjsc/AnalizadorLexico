@@ -16,6 +16,9 @@
 
 //------------------------------ Validaciones Sencillas --------------------------
 
+//Funcion para validar Simbolos
+int esSimbolo(char ch);
+
 //Funcion para validar Parentesis
 int esParentesis(char ch);
 
