@@ -1,6 +1,4 @@
 hacer
-{
-    a ++;
-    b <= c;
-}
-mientras (a < 10);
+{ a ++;
+b <= c;
+} mientras ( i < 10 );

@@ -1,1 +1,4 @@
-1  a  =  3;
+funcion mifuncion ( mivar1 ) 
+{
+real mivar2 = 3.5;
+}

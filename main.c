@@ -144,7 +144,27 @@ int main(int argc, char **argv) {
     miToken = daToken();
     printf("\tTOKEN: %d\n\tVALOR: %s\n\tSIMBOLO: %c\n",miToken.token,miToken.valor,miToken.simbolo);
 
+    miToken = daToken();
+    printf("\tTOKEN: %d\n\tVALOR: %s\n\tSIMBOLO: %c\n",miToken.token,miToken.valor,miToken.simbolo);
     
+    miToken = daToken();
+    printf("\tTOKEN: %d\n\tVALOR: %s\n\tSIMBOLO: %c\n",miToken.token,miToken.valor,miToken.simbolo);
+
+    miToken = daToken();
+    printf("\tTOKEN: %d\n\tVALOR: %s\n\tSIMBOLO: %c\n",miToken.token,miToken.valor,miToken.simbolo);
+
+    miToken = daToken();
+    printf("\tTOKEN: %d\n\tVALOR: %s\n\tSIMBOLO: %c\n",miToken.token,miToken.valor,miToken.simbolo);
+
+    miToken = daToken();
+    printf("\tTOKEN: %d\n\tVALOR: %s\n\tSIMBOLO: %c\n",miToken.token,miToken.valor,miToken.simbolo);
+
+    miToken = daToken();
+    printf("\tTOKEN: %d\n\tVALOR: %s\n\tSIMBOLO: %c\n",miToken.token,miToken.valor,miToken.simbolo);
+    
+    miToken = daToken();
+    printf("\tTOKEN: %d\n\tVALOR: %s\n\tSIMBOLO: %c\n",miToken.token,miToken.valor,miToken.simbolo);
+
     
     return 0;
 }
