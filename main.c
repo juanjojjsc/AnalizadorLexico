@@ -347,19 +347,24 @@ struct Entrada daToken() {
                 e.simbolo = '-';
                 return e;
             } else {
+                insertarRegistro(buffer,"Identificador",idNumero);
+                printf("Registro insertado\n");
                 #ifdef DEBUG
                     printf("<Identificador, %d>\n",idNumero);
                     printf("Buffer size: %d\n",bufferSize);
-                    insertarRegistro(buffer,"Identificador",idNumero);
                     imprimirListaLigada();
                     printf("\n");
                 #endif
                 // convert idNumber to string directly intro e.token
+
+                printf("ANTES\n");
                 sprintf(e.valor, "%d", idNumero);
+                printf("DESPUES\n");
                 idNumero++;
                 e.token = 4;
                 //e.valor = idNumero;
                 e.simbolo = '-';
+                printf("FINAL\n");
                 return e;
             } 
         
