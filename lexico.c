@@ -18,7 +18,9 @@ const int palabraLength = 10;
 //Checar Simbolos
 int esSimbolo(char ch){
     if(ch == '(' || ch == ')' || ch == '{' || ch == '}' || ch == '[' || ch == ']' || ch == 'V' || ch == 'F') {
-        imprimirTokenCh(ch,"SIMBOLO");
+        #ifdef DEBUG
+            imprimirTokenCh(ch,"SIMBOLO");
+        #endif
         return 1;
     }
     return 0;
@@ -28,7 +30,9 @@ int esSimbolo(char ch){
 //Checar Parentesis
 int esParentesis(char ch){
     if(ch == '(' || ch == ')') {
-        imprimirTokenCh(ch,"Parentesis");
+        #ifdef DEBUG
+            imprimirTokenCh(ch,"Parentesis");
+        #endif
         return 1;
     }
     return 0;
@@ -37,7 +41,9 @@ int esParentesis(char ch){
 //Checar Llaves
 int esLlave(char ch){
     if(ch == '{' || ch == '}') {
-        imprimirTokenCh(ch,"Llave");
+        #ifdef DEBUG
+            imprimirTokenCh(ch,"Llave");
+        #endif
         return 1;
     }
     return 0;
@@ -46,7 +52,9 @@ int esLlave(char ch){
 //Checar Corchetes
 int esCorchete(char ch){
     if(ch == '[' || ch == ']') {
-        imprimirTokenCh(ch,"Corchete");
+        #ifdef DEBUG
+            imprimirTokenCh(ch,"Corchete");
+        #endif
         return 1;
     }
     return 0;
@@ -57,7 +65,9 @@ int esBooleano(char ch){
     char operadoresBooleanos[] = "VF";
     for(int i = 0; i < 2; ++i){
         if(ch == operadoresBooleanos[i]) {
-            imprimirTokenCh(ch,"Booleano");
+            #ifdef DEBUG
+                imprimirTokenCh(ch,"Booleano");
+            #endif
             return 1;
         }
     }

@@ -19,6 +19,7 @@ struct TablaSimbolos
     struct TablaSimbolos *next;
 };
 
+//Estructura para la comunicacion con la tabla de Simbolos
 struct Entrada 
 {
     int token;
@@ -26,35 +27,33 @@ struct Entrada
     char simbolo;
 };
 
-
+//Declaracion de la funcion daToken
 struct Entrada daToken();
 
-
-int fileIndex = 0;
+//Declarar estructura para recibir tokens de entrada
+struct Entrada miToken;
 
 //Apuntadores a primer y ultimo nodo de la Lista Ligada
 struct TablaSimbolos *first,*last;
-int size = 0;
 
 //Variables
 char ch;
 int next = 0;
+int size = 0;
 char input[15]; 
 char buffer[15];
 char data[255];
-int j=0;
+int j = 0;
 int caracterSencilloFlag = 0;
 int idNumero = 1;
 int fileLenght = 0;
 int bufferSize = 0;
-
-struct Entrada miToken;
-
+int fileIndex = 0;
 
 char tokens[8][20] = {
                         "PalabraReservada",
                         "Tipo",
-                        "Funcion",
+                        "Otro",
                         "Identificador",
                         "OperadorAritmetico",
                         "OperadorRelacional",
@@ -73,8 +72,6 @@ int main(int argc, char **argv) {
         printf("\tEjemplo: ./analizador programa.txt\n");
         exit(EXIT_FAILURE);
     }
-
-    
     
     FILE *archivo;
     
@@ -87,83 +84,67 @@ int main(int argc, char **argv) {
         printf("Abriendo el programa: %s\n\n",argv[1]);
     }
 
-    // for (int i = 0; i < 50; i++)
-    // {
-    //     // if(data[i] == '')
-    //     fscanf(archivo, "%c", &data[i]);
-    // }
-
-    // for (int i = 0; i < 50; i++)
-    // {
-    //     printf("data: %c\n", data[i]);
-    // }
-
-    
-    
+    //Copiar archivo al arreglo data    
     while((fscanf(archivo, "%c", &data[fileLenght])) != EOF) {
-        printf("Data[%d]: %c\n",fileLenght,data[fileLenght]);
+        #ifdef DEBUG
+            printf("Data[%d]: %c\n",fileLenght,data[fileLenght]);
+        #endif
         fileLenght++;
     }
 
+    //Agregar un EOF al final
     data[fileLenght] = EOF;
 
-    for (int i=0; i<fileLenght+1; i++)
-        printf("%c",data[i]);
+
+    #ifdef DEBUG
+        //Imprimir data
+        for (int i=0; i<fileLenght+1; i++)
+            printf("%c",data[i]);
+
+        printf("File Lenght: %d\n",fileLenght);
+    #endif
 
     //Cerrar Archivo
     fclose(archivo);
 
-
-
-    printf("File Lenght: %d\n",fileLenght);
     
-    // //Leer todos los caracteres del archivo
-    // while((ch = fgetc(archivo)) != EOF){
-
-
-        
-        
-    // }
 
 
     
-    // for (int i=0; i<fileLenght; i++) {
-    //     miToken = daToken();
-    //     printf("\tTOKEN: %d\n\tVALOR: %c\n",miToken.token,miToken.simbolo);
-    // }
-
-    
-    
 
     miToken = daToken();
-    printf("\tTOKEN: %d\n\tVALOR: %s\n\tSIMBOLO: %c\n",miToken.token,miToken.valor,miToken.simbolo);
+    printf("\tTOKEN: %d\tVALOR: %s\tSIMBOLO: %c\n\n",miToken.token,miToken.valor,miToken.simbolo);
 
     miToken = daToken();
-    printf("\tTOKEN: %d\n\tVALOR: %s\n\tSIMBOLO: %c\n",miToken.token,miToken.valor,miToken.simbolo);
+    printf("\tTOKEN: %d\tVALOR: %s\tSIMBOLO: %c\n\n",miToken.token,miToken.valor,miToken.simbolo);
 
     miToken = daToken();
-    printf("\tTOKEN: %d\n\tVALOR: %s\n\tSIMBOLO: %c\n",miToken.token,miToken.valor,miToken.simbolo);
+    printf("\tTOKEN: %d\tVALOR: %s\tSIMBOLO: %c\n\n",miToken.token,miToken.valor,miToken.simbolo);
 
     miToken = daToken();
-    printf("\tTOKEN: %d\n\tVALOR: %s\n\tSIMBOLO: %c\n",miToken.token,miToken.valor,miToken.simbolo);
-    
-    miToken = daToken();
-    printf("\tTOKEN: %d\n\tVALOR: %s\n\tSIMBOLO: %c\n",miToken.token,miToken.valor,miToken.simbolo);
+    printf("\tTOKEN: %d\tVALOR: %s\tSIMBOLO: %c\n\n",miToken.token,miToken.valor,miToken.simbolo);
 
     miToken = daToken();
-    printf("\tTOKEN: %d\n\tVALOR: %s\n\tSIMBOLO: %c\n",miToken.token,miToken.valor,miToken.simbolo);
+    printf("\tTOKEN: %d\tVALOR: %s\tSIMBOLO: %c\n\n",miToken.token,miToken.valor,miToken.simbolo);
 
     miToken = daToken();
-    printf("\tTOKEN: %d\n\tVALOR: %s\n\tSIMBOLO: %c\n",miToken.token,miToken.valor,miToken.simbolo);
+    printf("\tTOKEN: %d\tVALOR: %s\tSIMBOLO: %c\n\n",miToken.token,miToken.valor,miToken.simbolo);
 
     miToken = daToken();
-    printf("\tTOKEN: %d\n\tVALOR: %s\n\tSIMBOLO: %c\n",miToken.token,miToken.valor,miToken.simbolo);
+    printf("\tTOKEN: %d\tVALOR: %s\tSIMBOLO: %c\n\n",miToken.token,miToken.valor,miToken.simbolo);
+
+     miToken = daToken();
+    printf("\tTOKEN: %d\tVALOR: %s\tSIMBOLO: %c\n\n",miToken.token,miToken.valor,miToken.simbolo);
 
     miToken = daToken();
-    printf("\tTOKEN: %d\n\tVALOR: %s\n\tSIMBOLO: %c\n",miToken.token,miToken.valor,miToken.simbolo);
-    
+    printf("\tTOKEN: %d\tVALOR: %s\tSIMBOLO: %c\n\n",miToken.token,miToken.valor,miToken.simbolo);
+
     miToken = daToken();
-    printf("\tTOKEN: %d\n\tVALOR: %s\n\tSIMBOLO: %c\n",miToken.token,miToken.valor,miToken.simbolo);
+    printf("\tTOKEN: %d\tVALOR: %s\tSIMBOLO: %c\n\n",miToken.token,miToken.valor,miToken.simbolo);
+
+    miToken = daToken();
+    printf("\tTOKEN: %d\tVALOR: %s\tSIMBOLO: %c\n\n",miToken.token,miToken.valor,miToken.simbolo);
+
 
     
     return 0;
@@ -171,93 +152,92 @@ int main(int argc, char **argv) {
 
 
 
-
-
-
+//Funcion que devuelve el siguiente Token en forma de estructura
 struct Entrada daToken() {
 
     #ifdef DEBUG
-            printf("Leyendo: %c\n",ch); 
-        #endif
+        printf("Pidiendo Token\n"); 
+    #endif
 
+    //Instanciar token de entrada
     struct Entrada e;
+   
+    //Si es un punto y coma, recorrer el indice
+    if ( data[fileIndex] == ';') {
+        #ifdef DEBUG
+            printf("Encontramos punto y coma\n"); 
+        #endif
+        fileIndex++;
+    }
 
-        
-
-        //Si es un punto y coma
-        if ( data[fileIndex] == ';') {
-            printf("Encontramos punto y coma\n");
-            fileIndex++;
-        }
-
-        //Si es un espacio
-        if ( data[fileIndex] == ' ') {
+    //Si es un espacio, recorrer el indice
+    if ( data[fileIndex] == ' ') {  
+        #ifdef DEBUG
             printf("Encontramos espacio\n");
-            fileIndex++;
-        }
+        #endif
+        fileIndex++;
+    }
 
-        //Si es una NUEVA LINEA
-        if ( data[fileIndex] == '\n') {
+    //Si es una NUEVA LINEA, recorrer el indice
+    if ( data[fileIndex] == '\n') {
+        #ifdef DEBUG
             printf("Encontramos nueva linea\n");
-            fileIndex++;
-        }
+        #endif
+        fileIndex++;
+    }
 
-        // Si ya se acabo el file
-        if (data[fileIndex] == EOF) {
+    // Si ya se acabo el file, regresar un token fallido.
+    if (data[fileIndex] == EOF) {
+        #ifdef DEBUG
             printf("\n\tEOF\n");
-            struct Entrada failed;
-            failed.token = -1;
-            return failed;
-        }
-        
+        #endif
+        struct Entrada failed;
+        failed.token = -1;
+        return failed;
+    }
+    
 
+    #ifdef DEBUG
         printf("Entrando a daToken con indice: %d\n", fileIndex);
         printf("Vamos a checar: %c\n", data[fileIndex]);
+    #endif
 
 
-//////////////////////////////////////// CHECAR LOS TOKENS DE UN SOLO CARACTER, SIN CENTINELAS
-
-        caracterSencilloFlag = 0;
-        caracterSencilloFlag = esSimbolo(data[fileIndex]);
-        if (caracterSencilloFlag) {
+    // CHECAR LOS TOKENS DE UN SOLO CARACTER OSEA SIMBOLOS, SIN CENTINELAS
+    caracterSencilloFlag = 0;
+    caracterSencilloFlag = esSimbolo(data[fileIndex]);
+    if (caracterSencilloFlag) {
+        #ifdef DDEBUG
             printf("Caracter Sencillo encontrado\n");
+            printf("Se va a guardar: %c\n", data[fileIndex]);
+        #endif
+        
+        // Cargar Data
+        // token num 8 es Simbolos 
+        e.token = 8;
+        e.simbolo = data[fileIndex];
+        e.valor = "-";
 
-            
-
-
-            printf("Vamos a guardar: %c\n", data[fileIndex]);
-            
-            //convert the char to string
-            //char simbol = data[fileIndex];
-            
-            // char str[1];
-            // str[0] = simbol;
-            //strcpy(str,data[fileIndex]);
-
-            //printf("converted: %c\n",str[0]);
-            // LOAD DATA
-            //token num 8 es Simbolos 
-            e.token = 8;
-            // strcpy(e.valor,str);
-            e.simbolo = data[fileIndex];
-            e.valor = "-";
-
-
+        #ifdef DEBUG
             printf("Guardamos token: %d\n", e.token);
             printf("Guardamos simbolo: %c\n", e.simbolo);
-           
-            //Incrementar el indice en cada pasada
-            fileIndex++;
-            
-            return e;
-        }
+        #endif
+        
+        //Incrementar el indice en cada pasada
+        fileIndex++;
+        
+        return e;
+    }
 
 
 
-    /////////////////////////////////////// CHECAR TOKENS ALFANUMERICOS CON SENTINELA
+    // CHECAR TOKENS ALFANUMERICOS CON CENTINELA
 
+    //Mientras el indice de data sea menor que su longitud
+    //Evaluar cada caracter, ir incrementando el indice para formar tokens
     while(fileIndex < fileLenght) {
 
+        //Si se llega al final del archivo, romper el ciclo
         if(data[fileIndex] == EOF)
             break;
 
@@ -272,16 +252,16 @@ struct Entrada daToken() {
             data[fileIndex] == '.' || 
             data[fileIndex] == '/' ) && !caracterSencilloFlag){
             
-            //#ifdef DEBUG
+            #ifdef DEBUG
                 printf("Entro.  %c si fue alfanum, seguimos checando...\n",data[fileIndex]); 
-            //#endif
-            //METEMOS LA BUFFER EL CARACTER QUE SIGUE, PARA VER SI YA ACABO CON UN ESPACIO
+            #endif
+            //METEMOS LA BUFFER EL CARACTER QUE SIGUE, PARA VER SI YA ACABO
             //SEGUIMOS METIENDO HASTA ENCONTRAR UN ESPACIO
             buffer[j++] = data[fileIndex];
             bufferSize++;
-            //#ifdef DEBUG
+            #ifdef DEBUG
                 printf("Avanzamos el buffer, ahora Buffer tiene: %c\n",data[fileIndex]);
-            //#endif
+            #endif
 
 
             //Incrementar indice
@@ -291,94 +271,106 @@ struct Entrada daToken() {
         //Cuando encuentra un espacio o terminador, terminar e identificar que fue el buffer
         else if((data[fileIndex] == ' ' || data[fileIndex] == '\n' || data[fileIndex] == ';') && (j != 0) && !caracterSencilloFlag){
             
-            //#ifdef DEBUG
-                printf("Entro. Espacio Encontrado, determinar que fue\n");
-            //#endif
+            #ifdef DEBUG
+                printf("Espacio Encontrado, determinar que fue el buffer.\n");
+            #endif
 
             //Le mete al buffer un EOL para indicar que ya encontro un espacio o terminador
             buffer[j] = '\0';
             j = 0;
 
-            //HASTA QUE ENCUENTRA UN ESPACIO, ENTONCES SE ATREVE A DECIR QUE FUE LO QUE TERMINO SIENDO
+            //HASTA QUE ENCUENTRA UN ESPACIO, ENTONCES SE PUEDE DECIR QUE FUE LO QUE TERMINO SIENDO
 
             //Imprimir buffer
-            printf("BUFFER: %s\n",buffer);
+            #ifdef DEBUG
+                printf("BUFFER: %s\n",buffer);
+            #endif 
 
             //Identificar el buffer utilizando funciones de evaluacion
-
+            //Carga la informacion del token en una instancia de estructura Entrada
+            //Devuelve la estructura con el token
             if(esPalabraReservada(buffer) == 1) {
-                imprimirToken(buffer,"Palabra Reservada");
+                #ifdef DEBUG
+                    printf("Buffer size: %d\n",bufferSize);
+                    imprimirToken(buffer,"Palabra Reservada");  
+                #endif
                 e.token = 1;
                 e.valor = buffer;
                 e.simbolo = '-';
-                printf("Buffer size: %d\n",bufferSize);
-                // fileIndex += bufferSize;
                 return e;
             } else if (esRelacional(buffer)==1) {
                 //Que tipo de Operador Relacional es usando un automata de estados
-                const char* token = automataOpRelacionales(buffer);
-                //Imprimir el Token
-                printf("<OP Relacional, %s>\n",token);
+                char* token = automataOpRelacionales(buffer);
+                #ifdef DEBUG
+                    printf("<OP Relacional, %s>\n",token);
+                    printf("Buffer size: %d\n",bufferSize);
+                #endif
                 e.token = 6;
-                e.valor = buffer;
+                e.valor = token;
                 e.simbolo = '-';
-                printf("Buffer size: %d\n",bufferSize);
-                // fileIndex += bufferSize;
                 return e;
             } else if (esAritmetico(buffer)==1) {
-                imprimirToken(buffer,"Operador Aritmetico");
+                #ifdef DEBUG
+                    imprimirToken(buffer,"Operador Aritmetico");
+                    printf("Buffer size: %d\n",bufferSize);
+                #endif
                 e.token = 5;
                 e.valor = buffer;
                 e.simbolo = '-';
-                printf("Buffer size: %d\n",bufferSize);
-                // fileIndex += bufferSize;
                 return e;
             } else if (esComentario(buffer)==1) {
-                imprimirToken(buffer,"Comentario");
+                #ifdef DEBUG
+                    imprimirToken(buffer,"Comentario");
+                    printf("Buffer size: %d\n",bufferSize);
+                #endif
                 e.token = 8;
                 e.valor = buffer;
                 e.simbolo = '-';
-                printf("Buffer size: %d\n",bufferSize);
-                // fileIndex += bufferSize;
                 return e;
             } else if (!strcmp(buffer,"=")) {
-                imprimirToken(buffer,"Asignacion");
+                #ifdef DEBUG
+                    imprimirToken(buffer,"Asignacion");
+                    printf("Buffer size: %d\n",bufferSize);
+                #endif
                 e.token = 7;
                 e.valor = buffer;
                 e.simbolo = '-';
-                printf("Buffer size: %d\n",bufferSize);
-                // fileIndex += bufferSize;
                 return e;
             } else if (esNumero(buffer)==1) {
-                const char* token = automataNumeros(buffer);
-                //Imprimir el Token
-                printf("<Tipo, %s>\n",token);
+                char* token = automataNumeros(buffer);
+                #ifdef DEBUG
+                    printf("<Tipo, %s>\n",token);
+                    printf("Buffer size: %d\n",bufferSize);
+                #endif
                 e.token = 2;
-                e.valor = buffer;
+                e.valor = token;
                 e.simbolo = '-';
-                printf("Buffer size: %d\n",bufferSize);
-                // fileIndex += bufferSize;
                 return e;
             } else {
-                printf("<Identificador, %d>\n",idNumero);
-                insertarRegistro(buffer,"Identificador",idNumero);
-                imprimirListaLigada();
-                printf("\n");
+                #ifdef DEBUG
+                    printf("<Identificador, %d>\n",idNumero);
+                    printf("Buffer size: %d\n",bufferSize);
+                    insertarRegistro(buffer,"Identificador",idNumero);
+                    imprimirListaLigada();
+                    printf("\n");
+                #endif
+                // convert idNumber to string directly intro e.token
+                sprintf(e.valor, "%d", idNumero);
                 idNumero++;
-                e.token = 3;
-                e.valor = buffer;
+                e.token = 4;
+                //e.valor = idNumero;
                 e.simbolo = '-';
-                printf("Buffer size: %d\n",bufferSize);
-                // fileIndex += bufferSize;
                 return e;
             } 
         
-        }
+        } 
         //Terminar la iteracion
         caracterSencilloFlag = 0;
         
-    
     }
+    //Return failed token. Not a valid afanumerical character
+    e.token = -1;
+    return e;
 
 }
     
@@ -386,178 +378,8 @@ struct Entrada daToken() {
 
 
 
-    // //Mientras siga habiendo un caracter, seguir metiendo en el buffer
 
-    //     //Exepciones Alfanumericas que podrian conformar Tokens de mas de un caracter
-    //     if((isalnum(data[fileIndex]) || 
-    //         data[fileIndex] == '=' || 
-    //         data[fileIndex] == '<' || 
-    //         data[fileIndex] == '>' || 
-    //         data[fileIndex] == '+' || 
-    //         data[fileIndex] == '-' || 
-    //         data[fileIndex] == '*' ||
-    //         data[fileIndex] == '.' || 
-    //         data[fileIndex] == '/' ) && !caracterSencilloFlag){
-            
-    //         //#ifdef DEBUG
-    //             printf("Entro.  %c si fue alfanum, seguimos checando...\n",data[fileIndex]); 
-    //         //#endif
-    //         //METEMOS LA BUFFER EL CARACTER QUE SIGUE, PARA VER SI YA ACABO CON UN ESPACIO
-    //         //SEGUIMOS METIENDO HASTA ENCONTRAR UN ESPACIO
-    //         buffer[j++] = data[fileIndex];
-    //         //#ifdef DEBUG
-    //             printf("Avanzamos el buffer, ahora Buffer tiene: %c\n",ch);
-    //         //#endif
-
-
-    //         //Incrementar indice
-    //         fileIndex++;
-            
-    //     }
-    //     //Cuando encuentra un espacio o terminador, terminar e identificar que fue el buffer
-    //     else if((data[fileIndex] == ' ' || data[fileIndex] == '\n' || data[fileIndex] == ';') && (j != 0) && !caracterSencilloFlag){
-            
-    //         //#ifdef DEBUG
-    //             printf("Entro. Espacio Encontrado, determinar que fue\n");
-    //         //#endif
-
-    //         //Le mete al buffer un EOL para indicar que ya encontro un espacio o terminador
-    //         buffer[j] = '\0';
-    //         j = 0;
-
-    //         //HASTA QUE ENCUENTRA UN ESPACIO, ENTONCES SE ATREVE A DECIR QUE FUE LO QUE TERMINO SIENDO
-
-
-
-
-
-
-
-    //     }
-
-
-
-        
-//}
-
-        // caracterSencilloFlag = esCorchete(data[fileIndex]);
-        // if (caracterSencilloFlag) {
-        //     printf("Caracter Sencillo encontrado\n");
-        //     return data[fileIndex];
-        // }
-        // caracterSencilloFlag = esLlave(data[fileIndex]);
-        // if (caracterSencilloFlag) {
-        //     printf("Caracter Sencillo encontrado\n");
-        //     return data[fileIndex];
-        // }
-        // caracterSencilloFlag = esBooleano(data[fileIndex]);
-        // if (caracterSencilloFlag) {
-        //     printf("Caracter Sencillo encontrado\n");
-        //     return data[fileIndex];
-        // }
-
-        //printf("Final del chequeo sencillo\n");
-        // printf("Bandera: %d\n",caracterSencilloFlag);
-
-        // if (caracterSencilloFlag) {
-        //     scanf("%d",&next);
-            
-        //     fileIndex++;
-
-        //     printf("Indice incrementado a: %d\n",fileIndex);
-        // }
-
-
-
-/////////////////////////////////////// CHECAR TOKENS ALFANUMERICOS CON SENTINELA
-
-        //Mientras siga habiendo un caracter, seguir metiendo en el buffer
-
-        //Exepciones Alfanumericas que podrian conformar Tokens de mas de un caracter
-        // if((isalnum(ch) || 
-        //     ch == '=' || 
-        //     ch == '<' || 
-        //     ch == '>' || 
-        //     ch == '+' || 
-        //     ch == '-' || 
-        //     ch == '*' ||
-        //     ch == '.' || 
-        //     ch == '/' ) && !caracterSencilloFlag){
-            
-        //     #ifdef DEBUG
-        //         printf("Entro.  %c si fue alfanum, seguimos checando...\n",ch); 
-        //     #endif
-        //     //METEMOS LA BUFFER EL CARACTER QUE SIGUE, PARA VER SI YA ACABO CON UN ESPACIO
-        //     //SEGUIMOS METIENDO HASTA ENCONTRAR UN ESPACIO
-        //     buffer[j++] = ch;
-        //     #ifdef DEBUG
-        //         printf("Avanzamos el buffer, ahora Buffer tiene: %c\n",ch);
-        //     #endif
-            
-        // }
-        // //Cuando encuentra un espacio o terminador, terminar e identificar que fue el buffer
-        // else if((ch == ' ' || ch == '\n' || ch == ';') && (j != 0) && !caracterSencilloFlag){
-            
-        //     #ifdef DEBUG
-        //         printf("Entro. Espacio Encontrado, determinar que fue\n");
-        //     #endif
-
-        //     //Le mete al buffer un EOL para indicar que ya encontro un espacio o terminador
-        //     buffer[j] = '\0';
-        //     j = 0;
-
-        //     //HASTA QUE ENCUENTRA UN ESPACIO, ENTONCES SE ATREVE A DECIR QUE FUE LO QUE TERMINO SIENDO
-            
-            
-        //     #ifdef DEBUG
-        //         printf("Evaluando buffer: %s\n",buffer);
-        //     #endif
-
-        //     //Identificar el buffer utilizando funciones de evaluacion
-
-        //     if(esPalabraReservada(buffer) == 1) {
-        //         imprimirToken(buffer,"Palabra Reservada");
-        //         scanf("%d",&next);
-
-        //     } else if (esRelacional(buffer)==1) {
-        //         //Que tipo de Operador Relacional es usando un automata de estados
-        //         const char* token = automataOpRelacionales(buffer);
-        //         //Imprimir el Token
-        //         printf("<OP Relacional, %s>\n",token);
-        //         scanf("%d",&next);
-        //     } else if (esAritmetico(buffer)==1) {
-        //         imprimirToken(buffer,"Operador Aritmetico");
-        //         scanf("%d",&next);
-        //     } else if (esComentario(buffer)==1) {
-        //         imprimirToken(buffer,"Comentario");
-        //         scanf("%d",&next);
-        //     } else if (!strcmp(buffer,"=")) {
-        //         imprimirToken(buffer,"Asignacion");
-        //         scanf("%d",&next);
-        //     } else if (esNumero(buffer)==1) {
-        //         const char* token = automataNumeros(buffer);
-        //         //Imprimir el Token
-        //         printf("<Tipo, %s>\n",token);
-        //         scanf("%d",&next);
-        //     } else {
-        //         printf("<Identificador, %d>\n",idNumero);
-        //         insertarRegistro(buffer,"Identificador",idNumero);
-        //         imprimirListaLigada();
-        //         printf("\n");
-        //         idNumero++;
-        //         scanf("%d",&next);
-        //     } 
-        
-        // }
-        //Terminar la iteracion
-        //caracterSencilloFlag = 0;
-
-//}
-
-
-
-
-//-------------------------------- Funciones de la Tabla de Simbolos ---------------
+//----------------- Funciones de la Tabla de Simbolos ---------------
 
 
 // Funcion para insertar un nuevo registro en la Tabla de Simbolos
