@@ -127,24 +127,6 @@ int main(int argc, char **argv) {
     miToken = daToken();
     printf("\tTOKEN: %d\tVALOR: %s\tSIMBOLO: %c\n\n",miToken.token,miToken.valor,miToken.simbolo);
 
-    miToken = daToken();
-    printf("\tTOKEN: %d\tVALOR: %s\tSIMBOLO: %c\n\n",miToken.token,miToken.valor,miToken.simbolo);
-
-    miToken = daToken();
-    printf("\tTOKEN: %d\tVALOR: %s\tSIMBOLO: %c\n\n",miToken.token,miToken.valor,miToken.simbolo);
-
-     miToken = daToken();
-    printf("\tTOKEN: %d\tVALOR: %s\tSIMBOLO: %c\n\n",miToken.token,miToken.valor,miToken.simbolo);
-
-    miToken = daToken();
-    printf("\tTOKEN: %d\tVALOR: %s\tSIMBOLO: %c\n\n",miToken.token,miToken.valor,miToken.simbolo);
-
-    miToken = daToken();
-    printf("\tTOKEN: %d\tVALOR: %s\tSIMBOLO: %c\n\n",miToken.token,miToken.valor,miToken.simbolo);
-
-    miToken = daToken();
-    printf("\tTOKEN: %d\tVALOR: %s\tSIMBOLO: %c\n\n",miToken.token,miToken.valor,miToken.simbolo);
-
 
     
     return 0;
@@ -237,6 +219,7 @@ struct Entrada daToken() {
     //Evaluar cada caracter, ir incrementando el indice para formar tokens
     while(fileIndex < fileLenght) {
 
+        printf("INICIO\n");
         //Si se llega al final del archivo, romper el ciclo
         if(data[fileIndex] == EOF)
             break;
@@ -356,15 +339,10 @@ struct Entrada daToken() {
                     printf("\n");
                 #endif
                 // convert idNumber to string directly intro e.token
-
-                printf("ANTES\n");
                 sprintf(e.valor, "%d", idNumero);
-                printf("DESPUES\n");
                 idNumero++;
                 e.token = 4;
-                //e.valor = idNumero;
                 e.simbolo = '-';
-                printf("FINAL\n");
                 return e;
             } 
         
@@ -374,6 +352,7 @@ struct Entrada daToken() {
         
     }
     //Return failed token. Not a valid afanumerical character
+    printf("REGRESA");
     e.token = -1;
     return e;
 
