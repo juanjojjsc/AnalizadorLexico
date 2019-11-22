@@ -161,7 +161,7 @@ void programa() {
 
     struct Entrada t1;
     t1 = daToken();
-    int error;
+    int error = 0;
 
     printf("Token: %d\n",t1.token);
     printf("Valor: %s\n",t1.valor);
@@ -174,7 +174,7 @@ void programa() {
         printf("adios\n");
         //Checar que no haya error con def_variables
         //error = def_variables();
-        printf("Resultado DEF_VARIABLES: %d\n");
+        printf("Resultado DEF_VARIABLES: %d\n",def_variables());
         if (error) {
             mensajeError("Error en defincion de variables.");
         }
@@ -187,8 +187,8 @@ int def_variables() {
 
     struct Entrada t1;
     t1 = daToken();
-    char* tipo;
-    char* nombre;
+    char tipo[15];
+    char nombre[15];
 
     printf("DEF_VARIABLES\n");
 
@@ -215,9 +215,10 @@ int def_variables() {
             // EL LEXICO SOLAMENTE DA TOKENS, NO HACE REGISTROS EN LA TABLA
 
             //LLAMADA RECURSIVA
-            def_variables();
+            return def_variables();
         } else {
             mensajeError("error");
+            return 1;
         }
         //Si es palabra reservada null, es la condicion d eparo
     } else if(t1.token == 1) {
@@ -230,10 +231,10 @@ int def_variables() {
         } else {
             mensajeError("ERROR VARIABLE DECLARADA INCORRECTAMENTE");
             return 1;
-        }
+        } 
 
 
-    }
+    } else { return 1; }
 
 
 }
@@ -257,7 +258,7 @@ int checaReservada(struct Entrada x, char* palabra) {
 void mensajeError(char* mensaje) {
     printf("%s\n\n", mensaje);
     printf("Terminando programa.\n\n");
-    EXIT();
+    exit(0);
 }
 
 
