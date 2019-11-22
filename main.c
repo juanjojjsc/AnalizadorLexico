@@ -219,7 +219,7 @@ struct Entrada daToken() {
     //Evaluar cada caracter, ir incrementando el indice para formar tokens
     while(fileIndex < fileLenght) {
 
-        printf("INICIO\n");
+        
         //Si se llega al final del archivo, romper el ciclo
         if(data[fileIndex] == EOF)
             break;
@@ -331,16 +331,21 @@ struct Entrada daToken() {
                 return e;
             } else {
                 insertarRegistro(buffer,"Identificador",idNumero);
-                printf("Registro insertado\n");
                 #ifdef DEBUG
+                    printf("Registro insertado\n");
                     printf("<Identificador, %d>\n",idNumero);
                     printf("Buffer size: %d\n",bufferSize);
                     imprimirListaLigada();
                     printf("\n");
                 #endif
-                // convert idNumber to string directly intro e.token
-                sprintf(e.valor, "%d", idNumero);
+                
+                
+                
                 idNumero++;
+                // convert idNumber to string and then into  e.valor
+                char str[15];
+                snprintf(str, sizeof(str), "%d", idNumero);
+                e.valor = str;
                 e.token = 4;
                 e.simbolo = '-';
                 return e;
