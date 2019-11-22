@@ -27,14 +27,26 @@ struct Entrada
     char simbolo;
 };
 
-//Declaracion de la funcion daToken
-struct Entrada daToken();
+
 
 //Declarar estructura para recibir tokens de entrada
 struct Entrada miToken;
 
 //Apuntadores a primer y ultimo nodo de la Lista Ligada
 struct TablaSimbolos *first,*last;
+
+//Declaracion de la funcion daToken
+struct Entrada daToken();
+
+//Delcaracion de funciones de gramatica
+void programa();
+int def_variables();
+int def_funciones();
+int lista_sentencias();
+
+int checaReservada();
+void mensajeError();
+
 
 //Variables
 char ch;
@@ -107,31 +119,146 @@ int main(int argc, char **argv) {
     //Cerrar Archivo
     fclose(archivo);
 
+
+
+
+    // LLAMADAS A FUNCIONES DE GRAMATICA ////////////////////////////////////
+
+
+    programa();
+
+
+
     
 
 
     
 
-    miToken = daToken();
-    printf("\tTOKEN: %d\tVALOR: %s\tSIMBOLO: %c\n\n",miToken.token,miToken.valor,miToken.simbolo);
+    // miToken = daToken();
+    // printf("\tTOKEN: %d\tVALOR: %s\tSIMBOLO: %c\n\n",miToken.token,miToken.valor,miToken.simbolo);
 
-    miToken = daToken();
-    printf("\tTOKEN: %d\tVALOR: %s\tSIMBOLO: %c\n\n",miToken.token,miToken.valor,miToken.simbolo);
+    // miToken = daToken();
+    // printf("\tTOKEN: %d\tVALOR: %s\tSIMBOLO: %c\n\n",miToken.token,miToken.valor,miToken.simbolo);
 
-    miToken = daToken();
-    printf("\tTOKEN: %d\tVALOR: %s\tSIMBOLO: %c\n\n",miToken.token,miToken.valor,miToken.simbolo);
+    // miToken = daToken();
+    // printf("\tTOKEN: %d\tVALOR: %s\tSIMBOLO: %c\n\n",miToken.token,miToken.valor,miToken.simbolo);
 
-    miToken = daToken();
-    printf("\tTOKEN: %d\tVALOR: %s\tSIMBOLO: %c\n\n",miToken.token,miToken.valor,miToken.simbolo);
+    // miToken = daToken();
+    // printf("\tTOKEN: %d\tVALOR: %s\tSIMBOLO: %c\n\n",miToken.token,miToken.valor,miToken.simbolo);
 
-    miToken = daToken();
-    printf("\tTOKEN: %d\tVALOR: %s\tSIMBOLO: %c\n\n",miToken.token,miToken.valor,miToken.simbolo);
+    // miToken = daToken();
+    // printf("\tTOKEN: %d\tVALOR: %s\tSIMBOLO: %c\n\n",miToken.token,miToken.valor,miToken.simbolo);
 
 
     
     return 0;
 }
 
+
+// Funcion de Grmatica inicial que manda a llamar a las demas
+void programa() {
+    printf("programa\n");
+
+    struct Entrada t1;
+    t1 = daToken();
+    int error;
+
+    printf("Token: %d\n",t1.token);
+    printf("Valor: %s\n",t1.valor);
+    printf("Simbolor: %c\n",t1.simbolo);
+
+
+    if(!checaReservada(t1,"inicio")) {
+        printf("hola\n");
+        printf("Token INICIO encontrado\n");
+        printf("adios\n");
+        //Checar que no haya error con def_variables
+        //error = def_variables();
+        printf("Resultado DEF_VARIABLES: %d\n");
+        if (error) {
+            mensajeError("Error en defincion de variables.");
+        }
+    }
+
+}
+
+// Funcion Gramatical
+int def_variables() {
+
+    struct Entrada t1;
+    t1 = daToken();
+    char* tipo;
+    char* nombre;
+
+    printf("DEF_VARIABLES\n");
+
+    printf("Token: %d\n",t1.token);
+    printf("Valor: %s\n",t1.valor);
+    printf("Simbolor: %c\n",t1.simbolo);
+
+    // si es "Tipo"
+    if (t1.token == 2) {
+        strcpy(tipo, t1.valor);
+        printf("TIPO: %s\n",tipo);
+        t1 = daToken();
+        // si es "Identificador"
+        if (t1.token == 3) {
+            strcpy(nombre, t1.valor);
+            printf("ID: %s\n",nombre);
+            t1 = daToken();
+            //si es un operador asignacion
+            if (t1.token == 5) {
+                //dametoken
+                //checar que sea literal   
+            }
+            // HASTA AQUI,DAR DE ALTA EN LA TABLA DE SIMBOLOS
+            // EL LEXICO SOLAMENTE DA TOKENS, NO HACE REGISTROS EN LA TABLA
+
+            //LLAMADA RECURSIVA
+            def_variables();
+        } else {
+            mensajeError("error");
+        }
+        //Si es palabra reservada null, es la condicion d eparo
+    } else if(t1.token == 1) {
+
+        printf("PALABRA RESERVADA: %s\n",t1.valor);
+
+        if(!checaReservada(t1,"null")) {
+                // regrsar 0 es no hubo error
+            return 0;
+        } else {
+            mensajeError("ERROR VARIABLE DECLARADA INCORRECTAMENTE");
+            return 1;
+        }
+
+
+    }
+
+
+}
+
+
+//Funcion que checa que el token de entrada sea la palabra reservada deseada
+int checaReservada(struct Entrada x, char* palabra) {
+    //if x.token es igual a tokens[0] osea PalabraReservada
+    if (x.token == 1) {
+        // if true
+        printf("in\n");
+        return strcmp(x.valor, palabra) == 1;
+    } else {
+        //if false
+        return 1;
+    }
+}
+
+
+// Funcion que imprime mensaje de error y termina programa
+void mensajeError(char* mensaje) {
+    printf("%s\n\n", mensaje);
+    printf("Terminando programa.\n\n");
+    EXIT();
+}
 
 
 //Funcion que devuelve el siguiente Token en forma de estructura
