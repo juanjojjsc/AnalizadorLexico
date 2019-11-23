@@ -1,0 +1,3 @@
+inicio
+real a = 2.3;
+fin;

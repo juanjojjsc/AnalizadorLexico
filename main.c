@@ -190,7 +190,7 @@ void programa() {
         }
 
         //Checar que no haya error con def_funciones
-        //error = def_funciones();
+        error = def_funciones();
         printf("Resultado DEF_FUNCIONES: %d\n",error);
         if (error) {
             mensajeError("Error en defincion de funciones.");
@@ -218,6 +218,76 @@ void programa() {
 
 // Funcion Gramatical
 int def_variables() {
+
+    struct Entrada t1;
+    t1 = daToken();
+    char tipo[15];
+    char nombre[15];
+
+    printf("DEF_VARIABLES\n");
+
+    printf("Token: %d\n",t1.token);
+    printf("Valor: %s\n",t1.valor);
+    printf("Simbolor: %c\n",t1.simbolo);
+
+    // si es sgte token es "Tipo"
+    if (t1.token == 9) {
+        printf("SI - 1\n");
+        strcpy(tipo, t1.valor);
+        printf("TIPO: %s\n",tipo);
+        t1 = daToken();
+        printf("El siguiente token fue... %d\n",t1.token);
+        // si el siguiente es "Identificador"
+        if (t1.token == 4) {
+            printf("SI - 2\n");
+            strcpy(nombre, t1.valor);
+            printf("ID: %s\n",nombre);
+            t1 = daToken();
+            //si el siguiente un operador asignacion
+            if (t1.token == 7) {
+                printf("SI - 3\n");
+                t1 = daToken();
+                //si el siguiente es un literal
+                if (t1.token == 2) {
+                    printf("SI - 4\n");
+                    // HASTA AQUI,DAR DE ALTA EN LA TABLA DE SIMBOLOS
+                    // EL LEXICO SOLAMENTE DA TOKENS, NO HACE REGISTROS EN LA TABLA
+
+                    // REGISTRAR
+                    return 0;
+
+                }
+            }
+            
+
+            //LLAMADA RECURSIVA
+            return def_variables();
+        } else {
+            mensajeError("error");
+            return 1;
+        }
+        //Si es palabra reservada null, es la condicion d eparo
+    } else if(t1.token == 1) {
+
+        printf("PALABRA RESERVADA: %s\n",t1.valor);
+
+        if(!checaReservada(t1,"null")) {
+                // regrsar 0 es no hubo error
+            return 0;
+        } else {
+            mensajeError("ERROR VARIABLE DECLARADA INCORRECTAMENTE");
+            return 1;
+        } 
+
+
+    } else { return 1; }
+
+
+}
+
+
+// Funcion Gramatical
+int def_funciones() {
 
     struct Entrada t1;
     t1 = daToken();
