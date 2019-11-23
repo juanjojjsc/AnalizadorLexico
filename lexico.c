@@ -17,7 +17,7 @@ const int palabraLength = 10;
 
 //Checar Simbolos
 int esSimbolo(char ch){
-    if(ch == '(' || ch == ')' || ch == '{' || ch == '}' || ch == '[' || ch == ']' || ch == 'V' || ch == 'F') {
+    if(ch == '(' || ch == ')' || ch == '{' || ch == '}' || ch == '[' || ch == ']') {
         #ifdef DEBUG
             imprimirTokenCh(ch,"SIMBOLO");
         #endif
@@ -203,6 +203,8 @@ int esTipo(char buffer[]){
     
     return flag;
 }
+
+
 
 //Checar Palabras Reservadas
 int esPalabraReservada(char buffer[]){

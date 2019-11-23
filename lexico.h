@@ -28,7 +28,7 @@ int esCorchete(char ch);
 //Funcion para validar Llaves
 int esLlave(char ch);
 
-//Funcion para validad Booleanos de un solo caracter
+//Funcion para validar Booleanos dentro de un buffer
 int esBooleano(char ch);
 
 
@@ -43,6 +43,7 @@ int esPalabraReservada(char buffer[]);
 
 //Funcion para validar Tipos dentro de un buffer
 int esTipo(char buffer[]);
+
 
 //Funcion para validar Comentarios dentro de un buffer
 int esComentario(char buffer[]);

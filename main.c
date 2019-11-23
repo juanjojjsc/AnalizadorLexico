@@ -385,6 +385,35 @@ struct Entrada daToken() {
         return e;
     }
 
+    caracterSencilloFlag = esBooleano(data[fileIndex]);
+    if (caracterSencilloFlag) {
+        #ifdef DDEBUG
+            printf("Caracter Booleano encontrado\n");
+            printf("Se va a guardar: %c\n", data[fileIndex]);
+        #endif
+        
+        // Cargar Data
+        // token num 2 es Literal 
+        e.token = 2;
+        // char str[15];
+        // str[0] = data[fileIndex];
+        if (data[fileIndex] == 'V')
+            e.valor = "V";
+        if (data[fileIndex] == 'F')
+            e.valor = "F";
+        e.simbolo = '-';
+
+        #ifdef DEBUG
+            printf("Guardamos token: %d\n", e.token);
+            printf("Guardamos simbolo: %c\n", e.simbolo);
+        #endif
+        
+        //Incrementar el indice en cada pasada
+        fileIndex++;
+        
+        return e;
+    }
+
 
 
     // CHECAR TOKENS ALFANUMERICOS CON CENTINELA
