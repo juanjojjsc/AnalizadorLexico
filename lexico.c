@@ -177,6 +177,32 @@ int esComentario(char buffer[]){
     return flag;
 }
 
+//Checar Tipos
+int esTipo(char buffer[]){
+
+    #ifdef DEBUG
+        printf("ENTRAMOS A esTipo CON: %s\n",buffer);
+    #endif
+
+    char tipos[4][palabraLength] = {
+        "booleano",
+        "real",
+        "caracter",
+        "entero"
+    };
+
+    int i = 0;
+    int flag = 0;
+    
+    for(i = 0; i < 4; ++i){
+        if(strcmp(tipos[i], buffer) == 0){
+            flag = 1;
+            break;
+        }
+    }
+    
+    return flag;
+}
 
 //Checar Palabras Reservadas
 int esPalabraReservada(char buffer[]){
@@ -185,7 +211,7 @@ int esPalabraReservada(char buffer[]){
         printf("ENTRAMOS A esPalabraReservada CON: %s\n",buffer);
     #endif
 
-    char palabrasReservadas[17][palabraLength] = {
+    char palabrasReservadas[14][palabraLength] = {
         "inicio",
         "si",
         "sino",
@@ -196,10 +222,6 @@ int esPalabraReservada(char buffer[]){
         "mientras",
         "hacer",
         "variable",
-        "caracter",
-        "entero",
-        "real",
-        "booleano",
         "fin",
         "funcion",
         "null"
@@ -208,7 +230,7 @@ int esPalabraReservada(char buffer[]){
     int i = 0;
     int flag = 0;
     
-    for(i = 0; i < 17; ++i){
+    for(i = 0; i < 14; ++i){
         if(strcmp(palabrasReservadas[i], buffer) == 0){
             flag = 1;
             break;

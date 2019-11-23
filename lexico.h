@@ -41,6 +41,9 @@ int esRelacional(char buffer[]);
 //Funcion para validar Palabras Reservadas dentro de un buffer
 int esPalabraReservada(char buffer[]);
 
+//Funcion para validar Tipos dentro de un buffer
+int esTipo(char buffer[]);
+
 //Funcion para validar Comentarios dentro de un buffer
 int esComentario(char buffer[]);
 

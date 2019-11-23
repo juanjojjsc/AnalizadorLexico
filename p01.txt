@@ -1,0 +1,3 @@
+inicio
+entero a = 2;
+fin;

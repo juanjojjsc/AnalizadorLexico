@@ -62,15 +62,16 @@ int fileLenght = 0;
 int bufferSize = 0;
 int fileIndex = 0;
 
-char tokens[8][20] = {
+char tokens[9][20] = {
                         "PalabraReservada",
-                        "Tipo",
+                        "Literal",
                         "Otro",
                         "Identificador",
                         "OperadorAritmetico",
                         "OperadorRelacional",
                         "OperadorAsignacion",
-                        "Simbolo"
+                        "Simbolo",
+                        "Tipo"
                     };
     
 
@@ -125,7 +126,7 @@ int main(int argc, char **argv) {
     // LLAMADAS A FUNCIONES DE GRAMATICA ////////////////////////////////////
 
 
-    // programa();
+    programa();
 
 
 
@@ -134,29 +135,29 @@ int main(int argc, char **argv) {
 
     
 
-    miToken = daToken();
-    printf("\tTOKEN: %d\tVALOR: %s\tSIMBOLO: %c\t ADDR: %d\n\n",miToken.token,miToken.valor,miToken.simbolo,miToken.addr);
+    // miToken = daToken();
+    // printf("\tTOKEN: %d\tVALOR: %s\tSIMBOLO: %c\t ADDR: %d\n\n",miToken.token,miToken.valor,miToken.simbolo,miToken.addr);
 
-    miToken = daToken();
-    printf("\tTOKEN: %d\tVALOR: %s\tSIMBOLO: %c\t ADDR: %d\n\n",miToken.token,miToken.valor,miToken.simbolo,miToken.addr);
+    // miToken = daToken();
+    // printf("\tTOKEN: %d\tVALOR: %s\tSIMBOLO: %c\t ADDR: %d\n\n",miToken.token,miToken.valor,miToken.simbolo,miToken.addr);
 
-    miToken = daToken();
-    printf("\tTOKEN: %d\tVALOR: %s\tSIMBOLO: %c\t ADDR: %d\n\n",miToken.token,miToken.valor,miToken.simbolo,miToken.addr);
+    // miToken = daToken();
+    // printf("\tTOKEN: %d\tVALOR: %s\tSIMBOLO: %c\t ADDR: %d\n\n",miToken.token,miToken.valor,miToken.simbolo,miToken.addr);
 
-    miToken = daToken();
-    printf("\tTOKEN: %d\tVALOR: %s\tSIMBOLO: %c\t ADDR: %d\n\n",miToken.token,miToken.valor,miToken.simbolo,miToken.addr);
+    // miToken = daToken();
+    // printf("\tTOKEN: %d\tVALOR: %s\tSIMBOLO: %c\t ADDR: %d\n\n",miToken.token,miToken.valor,miToken.simbolo,miToken.addr);
 
-    miToken = daToken();
-    printf("\tTOKEN: %d\tVALOR: %s\tSIMBOLO: %c\t ADDR: %d\n\n",miToken.token,miToken.valor,miToken.simbolo,miToken.addr);
+    // miToken = daToken();
+    // printf("\tTOKEN: %d\tVALOR: %s\tSIMBOLO: %c\t ADDR: %d\n\n",miToken.token,miToken.valor,miToken.simbolo,miToken.addr);
 
-    miToken = daToken();
-    printf("\tTOKEN: %d\tVALOR: %s\tSIMBOLO: %c\t ADDR: %d\n\n",miToken.token,miToken.valor,miToken.simbolo,miToken.addr);
+    // miToken = daToken();
+    // printf("\tTOKEN: %d\tVALOR: %s\tSIMBOLO: %c\t ADDR: %d\n\n",miToken.token,miToken.valor,miToken.simbolo,miToken.addr);
 
-    miToken = daToken();
-    printf("\tTOKEN: %d\tVALOR: %s\tSIMBOLO: %c\t ADDR: %d\n\n",miToken.token,miToken.valor,miToken.simbolo,miToken.addr);
+    // miToken = daToken();
+    // printf("\tTOKEN: %d\tVALOR: %s\tSIMBOLO: %c\t ADDR: %d\n\n",miToken.token,miToken.valor,miToken.simbolo,miToken.addr);
 
-    miToken = daToken();
-    printf("\tTOKEN: %d\tVALOR: %s\tSIMBOLO: %c\t ADDR: %d\n\n",miToken.token,miToken.valor,miToken.simbolo,miToken.addr);
+    // miToken = daToken();
+    // printf("\tTOKEN: %d\tVALOR: %s\tSIMBOLO: %c\t ADDR: %d\n\n",miToken.token,miToken.valor,miToken.simbolo,miToken.addr);
 
     
     return 0;
@@ -173,7 +174,7 @@ void programa() {
 
     printf("Token: %d\n",t1.token);
     printf("Valor: %s\n",t1.valor);
-    printf("Simbolor: %c\n",t1.simbolo);
+    printf("Simbolo: %c\n",t1.simbolo);
 
 
     if(!checaReservada(t1,"inicio")) {
@@ -204,6 +205,7 @@ void programa() {
 
         //Checar que el programa termine con la palabra reservada 'fin'
         t1 = daToken();
+        printf("Vamos a checar si hay fin en: %d\n",t1.token);
         if(!checaReservada(t1,"fin")) {
             printf("EXITO\n");
         } else {
@@ -229,22 +231,31 @@ int def_variables() {
     printf("Simbolor: %c\n",t1.simbolo);
 
     // si es sgte token es "Tipo"
-    if (t1.token == 2) {
+    if (t1.token == 9) {
+        printf("SI - 1\n");
         strcpy(tipo, t1.valor);
         printf("TIPO: %s\n",tipo);
         t1 = daToken();
+        printf("El siguiente token fue... %d\n",t1.token);
         // si el siguiente es "Identificador"
-        if (t1.token == 3) {
+        if (t1.token == 4) {
+            printf("SI - 2\n");
             strcpy(nombre, t1.valor);
             printf("ID: %s\n",nombre);
             t1 = daToken();
             //si el siguiente un operador asignacion
             if (t1.token == 7) {
+                printf("SI - 3\n");
                 t1 = daToken();
                 //si el siguiente es un literal
                 if (t1.token == 2) {
+                    printf("SI - 4\n");
                     // HASTA AQUI,DAR DE ALTA EN LA TABLA DE SIMBOLOS
                     // EL LEXICO SOLAMENTE DA TOKENS, NO HACE REGISTROS EN LA TABLA
+
+                    // REGISTRAR
+                    return 0;
+
                 }
             }
             
@@ -444,6 +455,15 @@ struct Entrada daToken() {
                 e.valor = buffer;
                 e.simbolo = '-';
                 return e;
+            } else if(esTipo(buffer) == 1) {
+                #ifdef DEBUG
+                    printf("Buffer size: %d\n",bufferSize);
+                    imprimirToken(buffer,"Tipo");  
+                #endif
+                e.token = 9;
+                e.valor = buffer;
+                e.simbolo = '-';
+                return e;
             } else if (esRelacional(buffer)==1) {
                 //Que tipo de Operador Relacional es usando un automata de estados
                 char* token = automataOpRelacionales(buffer);
@@ -485,7 +505,7 @@ struct Entrada daToken() {
             } else if (esNumero(buffer)==1) {
                 char* token = automataNumeros(buffer);
                 #ifdef DEBUG
-                    printf("<Tipo, %s>\n",token);
+                    printf("<Literal, %s>\n",token);
                     printf("Buffer size: %d\n",bufferSize);
                 #endif
                 e.token = 2;
@@ -493,8 +513,8 @@ struct Entrada daToken() {
                 e.simbolo = '-';
                 return e;
             } else {
-                insertarRegistro(buffer,"Identificador",idNumero);
-                imprimirListaLigada();
+                //insertarRegistro(buffer,"Identificador",idNumero);
+                //imprimirListaLigada();
                 #ifdef DEBUG
                     printf("Registro insertado\n");
                     printf("<Identificador, %d>\n",idNumero);
