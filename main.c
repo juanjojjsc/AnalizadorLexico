@@ -44,8 +44,16 @@ void programa();
 int def_variables();
 int def_funciones();
 int lista_sentencias();
-int checaReservada();
-void mensajeError();
+int expresionAsignacion();
+int condSi();
+int ciclo();
+int mientras();
+int hacerMientras();
+int casos();
+int llamaFuncion();
+int checaReservada(struct Entrada x, char* palabra);
+int checaSimbolo(struct Entrada x, char simbolo);
+void mensajeError(char* mensaje);
 
 
 //Variables
@@ -285,6 +293,70 @@ int def_variables() {
 
 }
 
+// Funcion Gramatical
+int lista_sentencias() {
+
+    int error = 0;
+    struct Entrada t1;
+    t1 = daToken();
+    printf("Token: %d\n",t1.token);
+    printf("Valor: %s\n",t1.valor);
+    printf("Simbolo: %c\n",t1.simbolo);
+
+    //Si es una sentencia que empieze con palabra reservada
+    if (t1.token == 2) {
+        //Definir sentencia
+
+        
+        // error = condSi();
+        // error = ciclo();
+        // error = mientras();
+        // error = hacerMientras();
+        // error = casos();
+        // error = llamaFuncion();
+
+        if (!error) {
+            //Llamada recursiva
+            return lista_sentencias();
+        } else {
+            return 1;
+            mensajeError("Error en sentencias");
+        }
+        
+
+        //Si es una sentencia que empieza con IDENTIFICADOR
+    } else if(t1.token == 4) {
+
+        // error = expresionAsignacion();
+
+        if (!error) {
+            //Llamada recursiva
+            return lista_sentencias();
+        } else {
+            return 1;
+            mensajeError("Error en sentencias");
+        }
+
+    //Si es palabra reservada null, es la condicion d eparo
+    } else if(t1.token == 1) {
+
+        printf("PALABRA RESERVADA: %s\n",t1.valor);
+
+        if(!checaReservada(t1,"null")) {
+                // regrsar 0 es no hubo error
+            return 0;
+        } else {
+            mensajeError("ERROR SENTENCIA DECLARADA INCORRECTAMENTE");
+            return 1;
+        } 
+
+
+    } else { return 1; }
+
+    
+
+
+}
 
 // Funcion Gramatical
 int def_funciones() {
@@ -294,7 +366,7 @@ int def_funciones() {
     char tipo[15];
     char nombre[15];
 
-    printf("DEF_VARIABLES\n");
+    printf("DEF_FUNCIONES\n");
 
     printf("Token: %d\n",t1.token);
     printf("Valor: %s\n",t1.valor);
@@ -307,11 +379,65 @@ int def_funciones() {
         printf("TIPO: %s\n",tipo);
         t1 = daToken();
         printf("El siguiente token fue... %d\n",t1.token);
-        // si el siguiente es "Identificador"
-        if (t1.token == 4) {
+        // si el siguiente es palabra reservada "funcion"
+        if (t1.token == 1) {
             printf("SI - 2\n");
-            strcpy(nombre, t1.valor);
-            printf("ID: %s\n",nombre);
+            //strcpy(nombre, t1.valor);
+            //printf("ID: %s\n",nombre);
+            if(!checaReservada(t1,"funcion")) {
+                printf("SI - 3\n");
+                printf("Palabra reservada funcion\n");
+                t1 = daToken();
+                //Checar ID
+                if (t1.token == 4) {
+                    printf("SI - 4\n");
+                    strcpy(nombre, t1.valor);
+                    printf("ID: %s\n",nombre);
+                    t1 = daToken();
+                    printf("El siguiente token fue... %d\n",t1.token);
+                    //Checar parentesis
+                    if (t1.token == 8) {
+                        if(t1.simbolo == '(') {
+                            printf("Parentesis ( encontrado\n");
+                            t1 = daToken();
+                            printf("El siguiente token fue... %d\n",t1.token);
+                            //Checar Tipo 
+                            // si es sgte token es "Tipo"
+                            if (t1.token == 9) {
+                                printf("SI - Tipo\n");
+                                strcpy(tipo, t1.valor);
+                                printf("TIPO: %s\n",tipo);
+                                t1 = daToken();
+                                //Checar ID
+                                if (t1.token == 4) {
+                                    printf("SI - ID\n");
+                                    strcpy(nombre, t1.valor);
+                                    printf("ID: %s\n",nombre);
+                                    t1 = daToken();
+                                    printf("El siguiente token fue... %d\n",t1.token);
+                                    //Checar parentesis )
+                                    if (t1.token == 8) {
+                                        if(t1.simbolo == ')') {
+                                            printf("Parentesis encontrado )\n");
+                                            t1 = daToken();
+                                            //Checar Corchete {
+                                            if (t1.token == 8) {
+                                                if(t1.simbolo == '{') {
+                                                    printf("Corchete encontrado {\n");
+                                                    t1 = daToken();
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
+                            }
+                        }
+                    }
+                }
+            } else {
+                mensajeError("ERROR, FALTA FIN");
+            }
             t1 = daToken();
             //si el siguiente un operador asignacion
             if (t1.token == 7) {
@@ -361,8 +487,19 @@ int checaReservada(struct Entrada x, char* palabra) {
     //if x.token es igual a tokens[0] osea PalabraReservada
     if (x.token == 1) {
         // if true
-        printf("in\n");
         return strcmp(x.valor, palabra) == 1;
+    } else {
+        //if false
+        return 1;
+    }
+}
+
+//Funcion que checa que el token de entrada sea la palabra reservada deseada
+int checaSimbolo(struct Entrada x, char simbolo) {
+    //if x.token es igual a tokens[0] osea PalabraReservada
+    if (x.token == 8) {
+        // if true
+        return !(x.token == simbolo);
     } else {
         //if false
         return 1;
