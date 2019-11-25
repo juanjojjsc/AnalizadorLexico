@@ -35,11 +35,11 @@ mensajeError()
 
 
 void programa() {
-    struct Entrada t1;
-    t1 = daToken();
+    struct Entrada miToken;
+    miToken = daToken();
     int error;
 
-    if(!checaReservada(t1,"inicio")) {
+    if(!checaReservada(miToken,"inicio")) {
 
         //Checar que no haya error con def_variables
         error = def_variables();
@@ -49,9 +49,9 @@ void programa() {
         error = def_funciones();
         error = lista_sentencias();
         //pedir sgte token
-        t1 = daToken();
+        miToken = daToken();
 
-        if(!checaReservada(t1,"fin")) {
+        if(!checaReservada(miToken,"fin")) {
             printf("EXITO");
         } else {
             printf("ERROR, FALTA FIN");
@@ -66,21 +66,21 @@ void programa() {
 
 int def_variables() {
 
-    struct Entrada t1;
-    t1 = daToken();
+    struct Entrada miToken;
+    miToken = daToken();
     char* tipo;
     char* nombre;
 
     // si es "Tipo"
-    if (t1.token == 1) {
-        strcpy(tipo, t1.valor);
-        t1 = daToken();
+    if (miToken.token == 1) {
+        strcpy(tipo, miToken.valor);
+        miToken = daToken();
         // si es "Identificador"
-        if (t1.token == 3) {
-            strcpy(nombre, t1.valor);
-            t1 = daToken();
+        if (miToken.token == 3) {
+            strcpy(nombre, miToken.valor);
+            miToken = daToken();
             //si es un operador asignacion
-            if (t1.token == 5) {
+            if (miToken.token == 5) {
                 //dametoken
                 //checar que sea literal   
             }
@@ -93,9 +93,9 @@ int def_variables() {
             "error"
         }
         //Si es palabra reservada null, es la condicion d eparo
-    } else if(t1.token == 0){
+    } else if(miToken.token == 0){
 
-        if(!checaReservada(t1,"null")) {
+        if(!checaReservada(miToken,"null")) {
                 // regrsar 0 es no hubo error
             return 0;
         } else {

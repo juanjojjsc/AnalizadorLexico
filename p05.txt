@@ -1,6 +1,6 @@
 inicio
 null;
 entero funcion mifunc ( real a ){
-
+entero a = 1;
 };
 fin

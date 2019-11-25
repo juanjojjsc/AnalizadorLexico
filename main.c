@@ -44,6 +44,7 @@ void programa();
 int def_variables();
 int def_funciones();
 int lista_sentencias();
+int funcion();
 int expresionAsignacion();
 int argumentos();
 int argumentosLlamada();
@@ -179,16 +180,16 @@ int main(int argc, char **argv) {
 void programa() {
     printf("programa\n");
 
-    struct Entrada t1;
-    t1 = daToken();
+    struct Entrada miToken;
+    miToken = daToken();
     int error = 0;
 
-    printf("Token: %d\n",t1.token);
-    printf("Valor: %s\n",t1.valor);
-    printf("Simbolo: %c\n",t1.simbolo);
+    printf("Token: %d\n",miToken.token);
+    printf("Valor: %s\n",miToken.valor);
+    printf("Simbolo: %c\n",miToken.simbolo);
 
 
-    if(!checaReservada(t1,"inicio")) {
+    if(!checaReservada(miToken,"inicio")) {
         printf("hola\n");
         printf("Token INICIO encontrado\n");
         printf("adios\n");
@@ -215,9 +216,9 @@ void programa() {
         }
 
         //Checar que el programa termine con la palabra reservada 'fin'
-        t1 = daToken();
-        printf("Vamos a checar si hay fin en: %d\n",t1.token);
-        if(!checaReservada(t1,"fin")) {
+        miToken = daToken();
+        printf("Vamos a checar si hay fin en: %d\n",miToken.token);
+        if(!checaReservada(miToken,"fin")) {
             printf("EXITO\n");
         } else {
             mensajeError("ERROR, FALTA FIN");
@@ -230,36 +231,36 @@ void programa() {
 // Funcion Gramatical
 int def_variables() {
 
-    struct Entrada t1;
-    t1 = daToken();
+    printf("adentro de def_vars\n");
+    miToken = daToken();
     char tipo[15];
     char nombre[15];
 
     printf("DEF_VARIABLES\n");
 
-    printf("Token: %d\n",t1.token);
-    printf("Valor: %s\n",t1.valor);
-    printf("Simbolor: %c\n",t1.simbolo);
+    printf("Token: %d\n",miToken.token);
+    printf("Valor: %s\n",miToken.valor);
+    printf("Simbolor: %c\n",miToken.simbolo);
 
     // si es sgte token es "Tipo"
-    if (t1.token == 9) {
+    if (miToken.token == 9) {
         printf("SI - 1\n");
-        strcpy(tipo, t1.valor);
+        strcpy(tipo, miToken.valor);
         printf("TIPO: %s\n",tipo);
-        t1 = daToken();
-        printf("El siguiente token fue... %d\n",t1.token);
+        miToken = daToken();
+        printf("El siguiente token fue... %d\n",miToken.token);
         // si el siguiente es "Identificador"
-        if (t1.token == 4) {
+        if (miToken.token == 4) {
             printf("SI - 2\n");
-            strcpy(nombre, t1.valor);
+            strcpy(nombre, miToken.valor);
             printf("ID: %s\n",nombre);
-            t1 = daToken();
+            miToken = daToken();
             //si el siguiente un operador asignacion
-            if (t1.token == 7) {
+            if (miToken.token == 7) {
                 printf("SI - 3\n");
-                t1 = daToken();
+                miToken = daToken();
                 //si el siguiente es un literal
-                if (t1.token == 2) {
+                if (miToken.token == 2) {
                     printf("SI - 4\n");
                     // HASTA AQUI,DAR DE ALTA EN LA TABLA DE SIMBOLOS
                     // EL LEXICO SOLAMENTE DA TOKENS, NO HACE REGISTROS EN LA TABLA
@@ -278,11 +279,11 @@ int def_variables() {
             return 1;
         }
         //Si es palabra reservada null, es la condicion d eparo
-    } else if(t1.token == 1) {
+    } else if(miToken.token == 1) {
 
-        printf("PALABRA RESERVADA: %s\n",t1.valor);
+        printf("PALABRA RESERVADA: %s\n",miToken.valor);
 
-        if(!checaReservada(t1,"null")) {
+        if(!checaReservada(miToken,"null")) {
                 // regrsar 0 es no hubo error
             return 0;
         } else {
@@ -296,30 +297,31 @@ int def_variables() {
 
 }
 
+
 // Funcion Gramatical
 int argumentos() {
 
     // int error = 0;
     char tipo[15];
     char nombre[15];
-    struct Entrada t1;
-    t1 = daToken();
+    // struct Entrada miToken;
+    miToken = daToken();
     
-    printf("Token: %d\n",t1.token);
-    printf("Valor: %s\n",t1.valor);
-    printf("Simbolo: %c\n",t1.simbolo);
+    printf("Token: %d\n",miToken.token);
+    printf("Valor: %s\n",miToken.valor);
+    printf("Simbolo: %c\n",miToken.simbolo);
 
     //Checar Tipo 
     // si es sgte token es "Tipo"
-    if (t1.token == 9) {
+    if (miToken.token == 9) {
         printf("SI - Tipo\n");
-        strcpy(tipo, t1.valor);
+        strcpy(tipo, miToken.valor);
         printf("TIPO: %s\n",tipo);
-        t1 = daToken();
+        miToken = daToken();
         //Checar ID
-        if (t1.token == 4) {
+        if (miToken.token == 4) {
             printf("SI - ID\n");
-            strcpy(nombre, t1.valor);
+            strcpy(nombre, miToken.valor);
             printf("ID: %s\n",nombre);
 
             //Llamada recursiva
@@ -339,30 +341,30 @@ int llamaFuncion() {
     int error = 0;
     // char tipo[15];
     char nombre[15];
-    struct Entrada t1;
-    t1 = daToken();
+    //struct Entrada miToken;
+    miToken = daToken();
     
-    printf("Token: %d\n",t1.token);
-    printf("Valor: %s\n",t1.valor);
-    printf("Simbolo: %c\n",t1.simbolo);
+    printf("Token: %d\n",miToken.token);
+    printf("Valor: %s\n",miToken.valor);
+    printf("Simbolo: %c\n",miToken.simbolo);
 
     //Checar ID
-    if (t1.token == 4) {
+    if (miToken.token == 4) {
         printf("SI - ID\n");
-        strcpy(nombre, t1.valor);
+        strcpy(nombre, miToken.valor);
         printf("ID: %s\n",nombre);
-        t1 = daToken();
+        miToken = daToken();
         //Checar parentesis
-        if (t1.token == 8) {
-            if(t1.simbolo == '(') {
+        if (miToken.token == 8) {
+            if(miToken.simbolo == '(') {
                 printf("Parentesis ( encontrado\n");
                 //Checar Argumentos de llamada
                 error = argumentosLlamada();
                 if (!error) {
-                    t1 = daToken();
+                    miToken = daToken();
                     //Checar parentesis
-                    if (t1.token == 8) {
-                        if(t1.simbolo == ')') {
+                    if (miToken.token == 8) {
+                        if(miToken.simbolo == ')') {
                             printf("Parentesis ) encontrado\n");
                             return 0;
                         } else return 1;
@@ -386,23 +388,23 @@ int argumentosLlamada() {
     // int error = 0;
     // char tipo[15];
     char nombre[15];
-    struct Entrada t1;
-    t1 = daToken();
+    //struct Entrada miToken;
+    miToken = daToken();
     
-    printf("Token: %d\n",t1.token);
-    printf("Valor: %s\n",t1.valor);
-    printf("Simbolo: %c\n",t1.simbolo);
+    printf("Token: %d\n",miToken.token);
+    printf("Valor: %s\n",miToken.valor);
+    printf("Simbolo: %c\n",miToken.simbolo);
 
     //Checar ID
-    if (t1.token == 4) {
+    if (miToken.token == 4) {
         printf("SI - ID\n");
-        strcpy(nombre, t1.valor);
+        strcpy(nombre, miToken.valor);
         printf("ID: %s\n",nombre);
         return 0;
 
         //Checar Literal
         //IMPLEMENTAR RECURSION
-    } else if (t1.token == 2) {
+    } else if (miToken.token == 2) {
         printf("SI - LITERAL\n");
         return 0;
     } else {
@@ -416,14 +418,14 @@ int argumentosLlamada() {
 int lista_sentencias() {
 
     int error = 0;
-    struct Entrada t1;
-    t1 = daToken();
-    printf("Token: %d\n",t1.token);
-    printf("Valor: %s\n",t1.valor);
-    printf("Simbolo: %c\n",t1.simbolo);
+    //struct Entrada miToken;
+    miToken = daToken();
+    printf("Token: %d\n",miToken.token);
+    printf("Valor: %s\n",miToken.valor);
+    printf("Simbolo: %c\n",miToken.simbolo);
 
     //Si es una sentencia que empieze con palabra reservada
-    if (t1.token == 2) {
+    if (miToken.token == 2) {
         //Definir sentencia
 
         
@@ -444,7 +446,7 @@ int lista_sentencias() {
         
 
         //Si es una sentencia que empieza con IDENTIFICADOR
-    } else if(t1.token == 4) {
+    } else if(miToken.token == 4) {
 
         // error = expresionAsignacion();
 
@@ -457,11 +459,11 @@ int lista_sentencias() {
         }
 
     //Si es palabra reservada null, es la condicion d eparo
-    } else if(t1.token == 1) {
+    } else if(miToken.token == 1) {
 
-        printf("PALABRA RESERVADA: %s\n",t1.valor);
+        printf("PALABRA RESERVADA: %s\n",miToken.valor);
 
-        if(!checaReservada(t1,"null")) {
+        if(!checaReservada(miToken,"null")) {
                 // regrsar 0 es no hubo error
             return 0;
         } else {
@@ -469,70 +471,105 @@ int lista_sentencias() {
             return 1;
         } 
 
-
     } else { return 1; }
 
-    
-
-
 }
+
+
 
 // Funcion Gramatical
 int def_funciones() {
 
+    printf("Adentro de Def_Funciones\n");
+
     int error = 0;
-    struct Entrada t1;
-    t1 = daToken();
+    //Checar que no haya error con funcion
+    error = funcion();
+    printf("Resultado FUNCION: %d\n",error);
+    if (error) {
+        mensajeError("Error en defincion de funciones.");
+     //Si es palabra reservada null, es la condicion d eparo
+    } else if (miToken.token == 1) {
+
+        printf("PALABRA RESERVADA: %s\n",miToken.valor);
+
+        if(!checaReservada(miToken,"null")) {
+                // regrsar 0 es no hubo error
+            return 0;
+        } else {
+            mensajeError("ERROR VARIABLE DECLARADA INCORRECTAMENTE");
+            return 1;
+        }
+    } else {
+        printf("Adios de def_funciones\n");
+        return 0;
+    }
+
+}
+
+// Funcion Gramatical
+int funcion() {
+
+    int error = 0;
+    //struct Entrada miToken;
+    miToken = daToken();
     char tipo[15];
     char nombre[15];
 
-    printf("DEF_FUNCIONES\n");
+    printf("ADENTRO DE FUNCION\n");
 
-    printf("Token: %d\n",t1.token);
-    printf("Valor: %s\n",t1.valor);
-    printf("Simbolor: %c\n",t1.simbolo);
+    printf("Token: %d\n",miToken.token);
+    printf("Valor: %s\n",miToken.valor);
+    printf("Simbolor: %c\n",miToken.simbolo);
 
     // si es sgte token es "Tipo"
-    if (t1.token == 9) {
+    if (miToken.token == 9) {
         printf("SI - 1\n");
-        strcpy(tipo, t1.valor);
+        strcpy(tipo, miToken.valor);
         printf("TIPO: %s\n",tipo);
-        t1 = daToken();
-        printf("El siguiente token fue... %d\n",t1.token);
+        miToken = daToken();
+        printf("El siguiente token fue... %d\n",miToken.token);
         // si el siguiente es palabra reservada "funcion"
-        if (t1.token == 1) {
+        if (miToken.token == 1) {
             printf("SI - 2\n");
-            //strcpy(nombre, t1.valor);
+            //strcpy(nombre, miToken.valor);
             //printf("ID: %s\n",nombre);
-            if(!checaReservada(t1,"funcion")) {
+            if(!checaReservada(miToken,"funcion")) {
                 printf("SI - 3\n");
                 printf("Palabra reservada funcion\n");
-                t1 = daToken();
+                miToken = daToken();
                 //Checar ID
-                if (t1.token == 4) {
+                if (miToken.token == 4) {
                     printf("SI - 4\n");
-                    strcpy(nombre, t1.valor);
+                    strcpy(nombre, miToken.valor);
                     printf("ID: %s\n",nombre);
-                    t1 = daToken();
-                    printf("El siguiente token fue... %d\n",t1.token);
+                    miToken = daToken();
+                    printf("El siguiente token fue... %d\n",miToken.token);
                     //Checar parentesis
-                    if (t1.token == 8) {
-                        if(t1.simbolo == '(') {
+                    if (miToken.token == 8) {
+                        if(miToken.simbolo == '(') {
                             printf("Parentesis ( encontrado\n");
                             //Checar argumentos
                             error = argumentos();
                             if (!error) {
                                 printf("Argumentos correctos\n");
+                                miToken = daToken();
                                 //Checar parentesis )
-                                if (t1.token == 8) {
-                                    if(t1.simbolo == ')') {
+                                if (miToken.token == 8) {
+                                    if(miToken.simbolo == ')') {
                                         printf("Parentesis encontrado )\n");
-                                        t1 = daToken();
+                                        miToken = daToken();
                                         //Checar Corchete {
-                                        if (t1.token == 8) {
-                                            if(t1.simbolo == '{') {
+                                        if (miToken.token == 8) {
+                                            if(miToken.simbolo == '{') {
                                                 printf("Corchete encontrado {\n");
-                                                t1 = daToken();
+                                                //Checar que no haya error con def_variables
+                                                error = def_variables();
+                                                printf("Resultado DEF_VARIABLES dentro de DEF_FUNCIONES: %d\n",error);
+                                                if (error) {
+                                                    mensajeError("Error en defincion de variables.");
+                                                }
+
                                             }
                                         }
                                     }
@@ -546,7 +583,7 @@ int def_funciones() {
             }
         }
     } else {
-        mensajeError("ERROR, FALTA FIN");
+        mensajeError("ERROR en definicion de funcion");
         return 1;
     }
            
