@@ -5,4 +5,4 @@ entero a = 1;
 regresa b;
 };
 a = 2;
-fin
+fin;

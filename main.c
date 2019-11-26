@@ -528,20 +528,58 @@ int sentencia() {
         //Si es una sentencia que empieza con IDENTIFICADOR
     } else if(miToken.token == 4) {
 
-        //error = expresionAsignacion();
+        printf("Encontramos id.....\n");
+
+        error = expresionAsignacion();
 
         if (!error) {
-            //Llamada recursiva
+            
             return 0;
         } else {
             return 1;
-            mensajeError("Error en sentencias");
+            mensajeError("Error en expresion de asignacion");
         }
 
     } 
 
 }
 
+// Funcion Gramatical
+int expresionAsignacion() {
+    
+    char nombre[15];
+    // char tipo[15];
+    //Checar ID
+    if (miToken.token == 4) {
+        printf("Encontamos ID en expresion asignacion\n");
+        strcpy(nombre, miToken.valor);
+        printf("ID: %s\n",nombre);
+        miToken = daToken();
+        printf("El siguiente token fue... %d\n",miToken.token);
+        //si el siguiente un operador asignacion
+        if (miToken.token == 7) {
+            printf("SI - OAs\n");
+            miToken = daToken();
+            //si el siguiente es un literal
+            if (miToken.token == 2) {
+                printf("SI - LITERAL\n");
+                // HASTA AQUI,DAR DE ALTA EN LA TABLA DE SIMBOLOS
+                // EL LEXICO SOLAMENTE DA TOKENS, NO HACE REGISTROS EN LA TABLA
+
+                // REGISTRAR
+                return 0;
+
+            }
+
+        }
+
+    } else {
+        mensajeError("Error en expresion de asignacion..\n");
+        return 1;
+    }
+
+
+}
 
 
 // Funcion Gramatical
