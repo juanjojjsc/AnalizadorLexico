@@ -475,20 +475,60 @@ int sentencia() {
     if (miToken.token == 2) {
         //Definir sentencia
 
+        //error = ciclo();
         if (!error) {
-            
-
+            printf("Ciclo Encontrado");
             return 0;
         } else {
-            return 1;
-            mensajeError("Error en sentencia");
+            //error = mientras();
+            if (!error) {
+                printf("Mientras Encontrado");
+                return 0;
+            } else {
+                //error = hacerMientras();
+                if (!error) {
+                    printf("Hacer Mientas Encontrado");
+                    return 0;
+                } else {
+                    //error = condSi();
+                    if (!error) {
+                        printf("Cond Si Encontrado");
+                        return 0;
+                    } else {
+                        //error = hacerMientras();
+                        if (!error) {
+                            printf("Hacer Mientas Encontrado");
+                            return 0;
+                        } else {
+                            //error = casos();
+                            if (!error) {
+                                printf("Casos Encontrado");
+                                return 0;
+                            } else {
+                                //error = llamaFuncion();
+                                if (!error) {
+                                    printf("Llama funcion Encontrado");
+                                    return 0;
+                                }
+
+                            }
+
+                        }
+
+
+                    }
+                }
+
+            }
+            
         }
-        
+    
+
 
         //Si es una sentencia que empieza con IDENTIFICADOR
     } else if(miToken.token == 4) {
 
-        // error = expresionAsignacion();
+        //error = expresionAsignacion();
 
         if (!error) {
             //Llamada recursiva
