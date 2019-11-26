@@ -1,6 +1,7 @@
 inicio
 entero x = 5;
-entero funcion mifunc ( real a ){
+entero funcion mifunc ( real b ){
 entero a = 1;
+regresa b;
 };
 fin

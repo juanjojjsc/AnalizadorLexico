@@ -581,13 +581,35 @@ int funcion() {
                                                     mensajeError("Error en defincion de variables.");
                                                 } else {
                                                     miToken = daToken();
-                                                    //Checar corchete }
-                                                    if (miToken.token == 8) {
-                                                        if(miToken.simbolo == '}') {
-                                                            printf("Corchete encontrado }\n");
-                                                            return 0;
+
+                                                    //Checar palabra reservada 'regresa'
+                                                    if (miToken.token == 1) {
+                                                    printf("PALABRA RESERVADA: %s\n",miToken.valor);
+                                                    if(!checaReservada(miToken,"regresa")) {
+                                                        printf("Encontramos 'regresa'\n");
+                                                        miToken = daToken();
+                                                        //Checar identificador
+                                                        if (miToken.token == 4) {
+                                                            printf("SI regresa un ID\n");
+                                                            strcpy(nombre, miToken.valor);
+                                                            printf("ID: %s\n",nombre);
+
+                                                            miToken = daToken();
+                                                            //Checar corchete }
+                                                            if (miToken.token == 8) {
+                                                                if(miToken.simbolo == '}') {
+                                                                    printf("Corchete encontrado }\n");
+                                                                    return 0;
+                                                                }
+                                                            }
                                                         }
+                                                    } else {
+                                                        mensajeError("ERROR REGRESO DE FUNCION INCORRECTO");
+                                                        return 1;
                                                     }
+                                                }
+
+                                                    
                                                 }
 
                                             }
