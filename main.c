@@ -208,15 +208,22 @@ void programa() {
             mensajeError("Error en defincion de funciones.");
         }
 
+        printf("DEF_FUNCIONES TERMINADA, el token actual:\n");
+        printf("Token: %d\n",miToken.token);
+        printf("Valor: %s\n",miToken.valor);
+        printf("Simbolor: %c\n",miToken.simbolo);
+
+
+
         //Checar que no haya error con lista_sentencias
         //error = lista_sentencias();
-        printf("Resultado LISTA_SENTENCIAS: %d\n",error);
-        if (error) {
-            mensajeError("Error en lista de sentencias.");
-        }
+        // printf("Resultado LISTA_SENTENCIAS: %d\n",error);
+        // if (error) {
+        //     mensajeError("Error en lista de sentencias.");
+        // }
 
         //Checar que el programa termine con la palabra reservada 'fin'
-        miToken = daToken();
+        //miToken = daToken();
         printf("Vamos a checar si hay fin en: %d\n",miToken.token);
         if(!checaReservada(miToken,"fin")) {
             printf("EXITO\n");
@@ -483,13 +490,8 @@ int def_funciones() {
     printf("Adentro de Def_Funciones\n");
 
     int error = 0;
-    //Checar que no haya error con funcion
-    error = funcion();
-    printf("Resultado FUNCION: %d\n",error);
-    if (error) {
-        mensajeError("Error en defincion de funciones.");
-     //Si es palabra reservada null, es la condicion d eparo
-    } else if (miToken.token == 1) {
+
+    if (miToken.token == 1) {
 
         printf("PALABRA RESERVADA: %s\n",miToken.valor);
 
@@ -500,10 +502,19 @@ int def_funciones() {
             mensajeError("ERROR VARIABLE DECLARADA INCORRECTAMENTE");
             return 1;
         }
-    } else {
-        printf("Adios de def_funciones\n");
+    }
+
+    //Checar que no haya error con funcion
+    error = funcion();
+    printf("Resultado FUNCION: %d\n",error);
+    if (error) {
+        mensajeError("Error en defincion de funciones.");
+        return 1;
+    }  else {
+        printf("Adios Def_Funciones");
         return 0;
     }
+
 
 }
 
@@ -568,6 +579,15 @@ int funcion() {
                                                 printf("Resultado DEF_VARIABLES dentro de DEF_FUNCIONES: %d\n",error);
                                                 if (error) {
                                                     mensajeError("Error en defincion de variables.");
+                                                } else {
+                                                    miToken = daToken();
+                                                    //Checar corchete }
+                                                    if (miToken.token == 8) {
+                                                        if(miToken.simbolo == '}') {
+                                                            printf("Corchete encontrado }\n");
+                                                            return 0;
+                                                        }
+                                                    }
                                                 }
 
                                             }

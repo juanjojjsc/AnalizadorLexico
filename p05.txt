@@ -1,5 +1,5 @@
 inicio
-null;
+entero x = 5;
 entero funcion mifunc ( real a ){
 entero a = 1;
 };
