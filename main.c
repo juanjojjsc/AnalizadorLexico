@@ -44,6 +44,7 @@ void programa();
 int def_variables();
 int def_funciones();
 int lista_sentencias();
+int sentencia();
 int funcion();
 int expresionAsignacion();
 int argumentos();
@@ -216,11 +217,11 @@ void programa() {
 
 
         //Checar que no haya error con lista_sentencias
-        //error = lista_sentencias();
-        // printf("Resultado LISTA_SENTENCIAS: %d\n",error);
-        // if (error) {
-        //     mensajeError("Error en lista de sentencias.");
-        // }
+        error = lista_sentencias();
+        printf("Resultado LISTA_SENTENCIAS: %d\n",error);
+        if (error) {
+            mensajeError("Error en lista de sentencias.");
+        }
 
         //Checar que el programa termine con la palabra reservada 'fin'
         //miToken = daToken();
@@ -427,28 +428,60 @@ int lista_sentencias() {
     int error = 0;
     //struct Entrada miToken;
     miToken = daToken();
+    printf("holo\n");
     printf("Token: %d\n",miToken.token);
     printf("Valor: %s\n",miToken.valor);
     printf("Simbolo: %c\n",miToken.simbolo);
+
+    
+    
+    
+    if(miToken.token == 1) {
+
+        printf("PALABRA RESERVADA: %s\n",miToken.valor);
+
+        if(!checaReservada(miToken,"null")) {
+                // regrsar 0 es no hubo error
+            return 0;
+        } else {
+            mensajeError("ERROR VARIABLE DECLARADA INCORRECTAMENTE");
+            return 1;
+        } 
+
+
+    } else { 
+        error = sentencia();
+        printf("Resultado SENTENCIA: %d\n",error);
+        if (error) {
+            mensajeError("Error en defincion de funciones.");
+        //Si es palabra reservada null, es la condicion d eparo
+        } else {
+            printf("No hubo error con lista_sentencias\n");
+            return lista_sentencias();
+        }
+     }
+
+    
+
+    
+
+}
+
+int sentencia() {
+    
+    int error = 0;
 
     //Si es una sentencia que empieze con palabra reservada
     if (miToken.token == 2) {
         //Definir sentencia
 
-        
-        // error = condSi();
-        // error = ciclo();
-        // error = mientras();
-        // error = hacerMientras();
-        // error = casos();
-        // error = llamaFuncion();
-
         if (!error) {
-            //Llamada recursiva
-            return lista_sentencias();
+            
+
+            return 0;
         } else {
             return 1;
-            mensajeError("Error en sentencias");
+            mensajeError("Error en sentencia");
         }
         
 
@@ -459,26 +492,13 @@ int lista_sentencias() {
 
         if (!error) {
             //Llamada recursiva
-            return lista_sentencias();
+            return 0;
         } else {
             return 1;
             mensajeError("Error en sentencias");
         }
 
-    //Si es palabra reservada null, es la condicion d eparo
-    } else if(miToken.token == 1) {
-
-        printf("PALABRA RESERVADA: %s\n",miToken.valor);
-
-        if(!checaReservada(miToken,"null")) {
-                // regrsar 0 es no hubo error
-            return 0;
-        } else {
-            mensajeError("ERROR SENTENCIA DECLARADA INCORRECTAMENTE");
-            return 1;
-        } 
-
-    } else { return 1; }
+    } 
 
 }
 

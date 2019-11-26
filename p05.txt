@@ -4,4 +4,5 @@ entero funcion mifunc ( real b ){
 entero a = 1;
 regresa b;
 };
+null;
 fin
