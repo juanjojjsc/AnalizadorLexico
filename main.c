@@ -678,33 +678,47 @@ int funcion() {
                                                 if (error) {
                                                     mensajeError("Error en defincion de variables.");
                                                 } else {
-                                                    miToken = daToken();
-
-                                                    //Checar palabra reservada 'regresa'
-                                                    if (miToken.token == 1) {
-                                                    printf("PALABRA RESERVADA: %s\n",miToken.valor);
-                                                    if(!checaReservada(miToken,"regresa")) {
-                                                        printf("Encontramos 'regresa'\n");
-                                                        miToken = daToken();
-                                                        //Checar identificador
-                                                        if (miToken.token == 4) {
-                                                            printf("SI regresa un ID\n");
-                                                            strcpy(nombre, miToken.valor);
-                                                            printf("ID: %s\n",nombre);
-
-                                                            miToken = daToken();
-                                                            //Checar corchete }
-                                                            if (miToken.token == 8) {
-                                                                if(miToken.simbolo == '}') {
-                                                                    printf("Corchete encontrado }\n");
-                                                                    return 0;
-                                                                }
-                                                            }
-                                                        }
+                                                    //Checar que no haya error con lista_sentencias
+                                                    error = lista_sentencias();
+                                                    printf("Resultado LISTA_SENTENCIAS dentro de DEF_FUNCIONES: %d\n",error);
+                                                    if (error) {
+                                                        mensajeError("Error en LISTA_SENTENCIAS.");
                                                     } else {
-                                                        mensajeError("ERROR REGRESO DE FUNCION INCORRECTO");
-                                                        return 1;
+
+                                                        printf("Sin error en LISTA_SENTENCIAS\n");
+                                                        //Checar palabra reservada 'regresa'
+                                                        if (miToken.token == 1) {
+                                                            printf("PALABRA RESERVADA: %s\n",miToken.valor);
+                                                            if(!checaReservada(miToken,"regresa")) {
+                                                                printf("Encontramos 'regresa'\n");
+                                                                miToken = daToken();
+                                                                //Checar identificador
+                                                                if (miToken.token == 4) {
+                                                                    printf("SI regresa un ID\n");
+                                                                    strcpy(nombre, miToken.valor);
+                                                                    printf("ID: %s\n",nombre);
+
+                                                                    miToken = daToken();
+                                                                    //Checar corchete }
+                                                                    if (miToken.token == 8) {
+                                                                        if(miToken.simbolo == '}') {
+                                                                            printf("Corchete encontrado }\n");
+                                                                            return 0;
+                                                                        }
+                                                                    }
+                                                                }
+                                                            } else {
+                                                                mensajeError("ERROR REGRESO DE FUNCION INCORRECTO");
+                                                                return 1;
+                                                            }
+
+
                                                     }
+
+
+
+                                                    
+                                                    
                                                 }
 
                                                     
