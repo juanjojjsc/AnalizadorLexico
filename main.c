@@ -556,18 +556,10 @@ int mientras() {
                                 }
                             }
                         }
-                       
-                    
-                    } else {
-                        return 1;
-
-                    }
-
+                    } 
                 } 
             }
-
-
-            
+      
         } else if (strcmp(miToken.valor,"hacer")==0) {
             printf("hacer encontrado\n");
             miToken = daToken();
@@ -663,44 +655,28 @@ int algoritmos() {
                 return 0;
             } else {
                 
-                    //error = condSi();
+                //error = condSi();
+                if (!error) {
+                    printf("Cond Si Encontrado\n");
+                    return 0;
+                
+                } else {
+                    //error = casos();
                     if (!error) {
-                        printf("Cond Si Encontrado\n");
+                        printf("Casos Encontrado");
                         return 0;
                     } else {
-                        //error = hacerMientras();
+                        //error = llamaFuncion();
                         if (!error) {
-                            printf("Hacer Mientas Encontrado\n");
+                            printf("Llama funcion Encontrado");
                             return 0;
-                        } else {
-                            //error = casos();
-                            if (!error) {
-                                printf("Casos Encontrado");
-                                return 0;
-                            } else {
-                                //error = llamaFuncion();
-                                if (!error) {
-                                    printf("Llama funcion Encontrado");
-                                    return 0;
-                                }
-
-                            }
-
+                        
                         }
-
-
-                    
+                    }
                 }
-
             }
-            
         }
-    
-
-
-        //Si es una sentencia que empieza con IDENTIFICADOR
     }
-
 }
 
 
@@ -724,9 +700,7 @@ int sentencia() {
             return 1;
             mensajeError("Error en expresion de asignacion");
         }
-
     } 
-
 }
 
 // Funcion Gramatical
@@ -764,10 +738,8 @@ int termino() {
         //         printf("SI - LITERAL\n");
         //         return 0;
         //     }
-        // }
-        
+        // }      
     }
-
 }
 
 // Funcion Gramatical
@@ -802,11 +774,9 @@ int expresionComparativa() {
             }  else {
                 printf("Termino encontrado\n");
                 return 0;
-            }
-            
+            }          
         }
     }
-
 }
 
 // Funcion Gramatical
@@ -829,9 +799,7 @@ int expresionIncremental() {
                 return 0;
             }
         }
-        
     }
-
 }
 
 // Funcion Gramatical
@@ -861,15 +829,11 @@ int expresionAsignacion() {
                 printf("Expresion de asignacion correcta\n");
                 return 0;
             }
-
         }
-
     } else {
         mensajeError("Error en expresion de asignacion..\n");
         return 1;
     }
-
-
 }
 
 
@@ -1002,27 +966,15 @@ int funcion() {
                                                                 mensajeError("ERROR REGRESO DE FUNCION INCORRECTO");
                                                                 return 1;
                                                             }
-
-
+                                                        }                                       
                                                     }
-
-
-
-                                                    
-                                                    
                                                 }
-
-                                                    
-                                                }
-
                                             }
                                         }
                                     }
                                 }
-                            }
-                            
+                            }   
                         }
-
                     }
                 }
             }
@@ -1031,9 +983,6 @@ int funcion() {
         mensajeError("ERROR en definicion de funcion");
         return 1;
     }
-           
-
-
 }
 
 
@@ -1213,8 +1162,7 @@ struct Entrada daToken() {
 
 
             //Incrementar indice
-            fileIndex++;
-            
+            fileIndex++;        
         }
         //Cuando encuentra un espacio o terminador, terminar e identificar que fue el buffer
         else if((data[fileIndex] == ' ' || data[fileIndex] == '\n' || data[fileIndex] == ';') && (j != 0) && !caracterSencilloFlag){
@@ -1321,18 +1269,15 @@ struct Entrada daToken() {
         
                 idNumero++;
                 return e;
-            } 
-        
+            }         
         } 
         //Terminar la iteracion
-        caracterSencilloFlag = 0;
-        
+        caracterSencilloFlag = 0;      
     }
     //Return failed token. Not a valid afanumerical character
     printf("REGRESA");
     e.token = -1;
     return e;
-
 }
     
 
@@ -1352,13 +1297,12 @@ void insertarRegistro(char symbol[], char type[], int addr){
     n = buscaRegistro(symbol);
     if(n==1)
         printf("\n\tERROR: REGISTRO DUPLICADO\n");
-    else
-    {
+    else {
         
         //Instanciar Tabla
         struct TablaSimbolos *p;
         //Reservar memoria
-        p=malloc(sizeof(struct TablaSimbolos));
+        p = malloc(sizeof(struct TablaSimbolos));
 
         //Cargar datos a la estructura
         strcpy(p->symbol,symbol);
@@ -1368,16 +1312,14 @@ void insertarRegistro(char symbol[], char type[], int addr){
         //Ajustar los apuntadores de la Lista Ligada
         p->next=NULL;
         //Si la lista esta vacia
-        if(size==0)
-        {
-            first=p;
-            last=p;
+        if(size == 0) {
+            first = p;
+            last = p;
         }
         //Si la lista no esta vacia, reajustar los apuntadores para incrementar
-        else
-        {
-            last->next=p;
-            last=p;
+        else {
+            last->next = p;
+            last = p;
         }
 
         size++;
@@ -1392,16 +1334,15 @@ void imprimirListaLigada()
 {
     int i;
     struct TablaSimbolos *p;
-    p=first;
+    p = first;
     #ifdef DDEBUG
         printf("Current Address: %p\n",&p);
     #endif
     printf("\n\tADDRESS\t\tSYMBOL\t\tTYPE\n");
     //Recorrer cada elemento de la lista ligada e imprimir sus atributos
-    for(i=0;i<size;i++)
-    {
+    for(i=0;i<size;i++) {
         printf("\t%d\t\t%s\t\t%s\n",p->addr,p->symbol,p->type);
-        p=p->next;
+        p = p->next;
     }
     printf("\n\n");
 }
@@ -1409,15 +1350,15 @@ void imprimirListaLigada()
 // Funcion de busqueda de registros de la Tabla de Simbolos
 int buscaRegistro(char symbol[])
 {
-    int i,flag=0;
+    int i;
+    int flag = 0;
     struct TablaSimbolos *p;
-    p=first;
+    p = first;
     //Iterar cada elemento de la lista ligada y compara el parametro ingresado con el atributo deseado
-    for(i=0;i<size;i++)
-    {
+    for(i=0;i<size;i++) {
         if(strcmp(p->symbol,symbol)==0)
             flag=1;
-        p=p->next;
+        p = p->next;
     }
     return flag;
 }
