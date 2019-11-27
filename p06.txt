@@ -1,9 +1,9 @@
 inicio
 entero x = 5;
-entero funcion mifunc ( real b ){
+entero funcion mifunc ( real b fin; ){
 entero a = 1;
 c = 2;
 regresa b;
 };
-mientras ( a < b ) { k = 7; };
+mientras ( a < b ) { k = 7 fin; };
 fin;

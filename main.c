@@ -570,12 +570,51 @@ int mientras() {
             
         } else if (strcmp(miToken.valor,"hacer")==0) {
             printf("hacer encontrado\n");
-
-
+            miToken = daToken();
+            //Checar Corchete
+            if (miToken.token == 8) {
+                if(miToken.simbolo == '{') {
+                    printf("Parentesis { encontrado\n");
+                    error = lista_sentencias();
+                    printf("Resultado: %d\n",error);
+                    if (!error) {
+                        printf("Sentencias Correctas\n");
+                        miToken = daToken();
+                        //Checar corchete
+                        if (miToken.token == 8) {
+                            if(miToken.simbolo == '}') {
+                                printf("Corchete } encontrado\n");
+                                miToken = daToken();
+                                if (strcmp(miToken.valor,"mientras")==0) {
+                                    printf("mientras encontrado\n");
+                                    miToken = daToken();
+                                    //Checar parentesis
+                                    if (miToken.token == 8) {
+                                        if(miToken.simbolo == '(') {
+                                            printf("Parentesis ( encontrado\n");
+                                            miToken = daToken();
+                                            error = condicion();
+                                            if (!error) {
+                                                printf("Condicion Correcta\n");
+                                                miToken = daToken();
+                                                //Checar parentesis
+                                                if (miToken.token == 8) {
+                                                    if(miToken.simbolo == ')') {
+                                                        printf("Parentesis ) encontrado\n");
+                                                        return 0;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } 
+            }
         }
     }
-
-
 }
 
 // Funcion Gramatical
