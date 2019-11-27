@@ -311,6 +311,8 @@ int def_variables() {
 // Funcion Gramatical
 int argumentos() {
 
+    
+
     // int error = 0;
     char tipo[15];
     char nombre[15];
@@ -320,6 +322,16 @@ int argumentos() {
     printf("Token: %d\n",miToken.token);
     printf("Valor: %s\n",miToken.valor);
     printf("Simbolo: %c\n",miToken.simbolo);
+
+    //Condicion de paro
+    if(miToken.token==1) {
+        if(!checaReservada(miToken,"fin")) {
+
+            printf("fin encontrado\n");
+            return 0;
+        
+        } 
+    }
 
     //Checar Tipo 
     // si es sgte token es "Tipo"
@@ -335,7 +347,7 @@ int argumentos() {
             printf("ID: %s\n",nombre);
 
             //Llamada recursiva
-            return 0;
+            return argumentos();
         } else {
             return 1;
         }
@@ -558,7 +570,7 @@ int mientras() {
             
         } else if (strcmp(miToken.valor,"hacer")==0) {
             printf("hacer encontrado\n");
-            
+
 
         }
     }
