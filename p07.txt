@@ -5,5 +5,5 @@ entero a = 1;
 c = 2;
 regresa b;
 };
-mientras ( a < b ) { k = 7; };
+mientras ( a < b ) { k = 7 fin; };
 fin;

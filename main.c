@@ -55,7 +55,6 @@ int argumentosLlamada();
 int condSi();
 int ciclo();
 int mientras();
-int hacerMientras();
 int casos();
 int llamaFuncion();
 int checaReservada(struct Entrada x, char* palabra);
@@ -428,6 +427,17 @@ int argumentosLlamada() {
 // Funcion Gramatical
 int lista_sentencias() {
 
+
+    // //Checar corchete final
+    // if (miToken.token == 8) {
+    //     if(miToken.simbolo == '}') {
+    //         printf("Corchete } encontrado, terminando lista_sentencias\n");
+    //         return 0;
+    //     }
+    // }
+
+    
+
     int error = 0;
     char nombre[15];
     //struct Entrada miToken;
@@ -437,9 +447,23 @@ int lista_sentencias() {
     printf("Valor: %s\n",miToken.valor);
     printf("Simbolo: %c\n",miToken.simbolo);
 
-    int res = !checaReservada(miToken,"null");
+    int res = !checaReservada(miToken,"fin");
     printf("Resultado de compara: %d\n",res);
 
+
+    if (miToken.token == 1) {
+        printf("Es reservada\n");
+        error = algoritmos();
+        printf("Resultado de algoritmos: %d\n",error);
+        return 0;
+
+        if(!checaReservada(miToken,"fin")) {
+
+            printf("fin encontrado\n");
+            return 0;
+        
+        } 
+    } else
 
 
     //Checar ID
@@ -461,15 +485,7 @@ int lista_sentencias() {
     }
 
     
-    if(!checaReservada(miToken,"fin")) {
-
-
-            printf("fin encontrado\n");
-            return 0;
-        
-
-
-    }
+    
 
 }
 
@@ -482,40 +498,70 @@ int ciclo() {
 
 // Funcion Gramatical
 int mientras() {
+    int error = 1;
     printf("Entramos a mientras...\n");
 
     // Si es un mientras
     if(miToken.token == 1) {
         printf("PALABRA RESERVADA: %s\n",miToken.valor);
-        if(!checaReservada(miToken,"mientras")) {
+        printf("Comp: %d\n",strcmp(miToken.valor,"mientras"));
+        if(strcmp(miToken.valor,"mientras")==0) {
             printf("mientras encontrado\n");
+            miToken = daToken();
             //Checar parentesis
             if (miToken.token == 8) {
                 if(miToken.simbolo == '(') {
                     printf("Parentesis ( encontrado\n");
-                    return 0;
+                    miToken = daToken();
+                    error = condicion();
+                    if (!error) {
+                        printf("Condicion Correcta\n");
+                        miToken = daToken();
+                        //Checar parentesis
+                        if (miToken.token == 8) {
+                            if(miToken.simbolo == ')') {
+                                printf("Parentesis ) encontrado\n");
+                                miToken = daToken();
+                                //Checar corchete
+                                if (miToken.token == 8) {
+                                    if(miToken.simbolo == '{') {
+                                        printf("Corchete { encontrado\n");
+                                        printf("token despues de corchete: %s\n",miToken.valor);
+                                        error = lista_sentencias();
+                                        printf("Resultado: %d\n",error);
+                                        if (!error) {
+                                            printf("Mientras Correcto\n");
+                                            miToken = daToken();
+                                            //Checar corchete
+                                            if (miToken.token == 8) {
+                                                if(miToken.simbolo == '}') {
+                                                    printf("Corchete } encontrado\n");
+                                                    return 0;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                       
+                    
+                    } else {
+                        return 1;
+
+                    }
+
                 } 
             }
 
 
             
-        } else {
-            return 1;
-        } 
-    } //Si es un HACER MIENTRAS 
-     else if (miToken.token == 1) {
-        printf("PALABRA RESERVADA: %s\n",miToken.valor);
-        if(!checaReservada(miToken,"hacer")) {
+        } else if (strcmp(miToken.valor,"hacer")==0) {
             printf("hacer encontrado\n");
+            
 
-            return 0;
-        } else {
-            return 1;
-        } 
-     } else {
-         mensajeError("ERROR MIENTRAS DECLARADO INCORRECTAMENTE");
-        return 1;
-     }
+        }
+    }
 
 
 }
@@ -523,68 +569,57 @@ int mientras() {
 // Funcion Gramatical
 int condicion() {
 
+    printf("Entramos a condicion\n");
+
     int error = 0;
     char nombre[15];
     error = expresionComparativa();
     if (!error) {
         printf("Expresion Comparativa Correcta\n");
-        miToken = daToken();
+        return 0;
+    
     } else {
-        error = expresionIncremental();
-        if (!error) {
-            printf("Expresion Incremental Correcta\n");
-            miToken = daToken();
-        } else {
-            //Checar ID
-            if (miToken.token == 4) {
-                printf("Encontamos ID en expresion asignacion\n");
-                strcpy(nombre, miToken.valor);
-                printf("ID: %s\n",nombre);
-                return 0;
-            }
+        return 1;
 
-        }
-    }        
-
+    }
+            
 
 }
 
 
+int algoritmos() {
 
-//Funcion Gramatical
-int sentencia() {
 
-    printf("DENTRO DE FUNCION SENTENCIA\n");
-    
-    int error = 0;
+    printf("Entramos a algoritmos con: \n");
+    printf("Token: %d\n",miToken.token);
+    printf("Valor: %s\n",miToken.valor);
+    printf("Simbolo: %c\n",miToken.simbolo);
+
+    int error = 1;
 
     //Si es una sentencia que empieze con palabra reservada
-    if (miToken.token == 2) {
+    if (miToken.token == 1) {
         //Definir sentencia
 
         //error = ciclo();
         if (!error) {
-            printf("Ciclo Encontrado");
+            printf("Ciclo Compilado\n");
             return 0;
         } else {
             error = mientras();
             if (!error) {
-                printf("Mientras Encontrado");
+                printf("Mientras Compilado\n");
                 return 0;
             } else {
-                //error = hacerMientras();
-                if (!error) {
-                    printf("Hacer Mientas Encontrado");
-                    return 0;
-                } else {
+                
                     //error = condSi();
                     if (!error) {
-                        printf("Cond Si Encontrado");
+                        printf("Cond Si Encontrado\n");
                         return 0;
                     } else {
                         //error = hacerMientras();
                         if (!error) {
-                            printf("Hacer Mientas Encontrado");
+                            printf("Hacer Mientas Encontrado\n");
                             return 0;
                         } else {
                             //error = casos();
@@ -603,7 +638,7 @@ int sentencia() {
                         }
 
 
-                    }
+                    
                 }
 
             }
@@ -613,14 +648,26 @@ int sentencia() {
 
 
         //Si es una sentencia que empieza con IDENTIFICADOR
-    } else if(miToken.token == 4) {
+    }
+
+}
+
+
+//Funcion Gramatical
+int sentencia() {
+
+    printf("DENTRO DE FUNCION SENTENCIA\n");
+    
+    int error = 0;
+
+     if(miToken.token == 4) {
 
         printf("Encontramos id.....\n");
 
         error = expresionAsignacion();
 
         if (!error) {
-            
+            printf("No hubo error con exp Asignacion\n");
             return 0;
         } else {
             return 1;
@@ -633,6 +680,11 @@ int sentencia() {
 
 // Funcion Gramatical
 int termino() {
+
+    printf("Dentro de termino con: \n");
+    printf("Token: %d\n",miToken.token);
+    printf("Valor: %s\n",miToken.valor);
+    printf("Simbolo: %c\n",miToken.simbolo);
 
     char nombre[15];
     // Si es un literal
@@ -649,18 +701,19 @@ int termino() {
         printf("Encontramos ID\n");
         strcpy(nombre, miToken.valor);
         printf("ID: %s\n",nombre);
-        miToken = daToken();
-        printf("El siguiente token fue... %d\n",miToken.token);
-        //Checar Operador Aritmetico
-        if (miToken.token == 5) {
-            printf("Operador Aritmetico encontrado\n");
-            miToken = daToken();
-            // Si es un literal
-            if (miToken.token == 2) {
-                printf("SI - LITERAL\n");
-                return 0;
-            }
-        }
+        return 0;
+        // miToken = daToken();
+        // printf("El siguiente token fue... %d\n",miToken.token);
+        // //Checar Operador Aritmetico
+        // if (miToken.token == 5) {
+        //     printf("Operador Aritmetico encontrado\n");
+        //     miToken = daToken();
+        //     // Si es un literal
+        //     if (miToken.token == 2) {
+        //         printf("SI - LITERAL\n");
+        //         return 0;
+        //     }
+        // }
         
     }
 
@@ -668,6 +721,12 @@ int termino() {
 
 // Funcion Gramatical
 int expresionComparativa() {
+
+    printf("Dentro de expresion Comparativa con\n");
+
+    printf("Token: %d\n",miToken.token);
+    printf("Valor: %s\n",miToken.valor);
+    printf("Simbolo: %c\n",miToken.simbolo);
 
     int error = 0;
 
@@ -687,10 +746,10 @@ int expresionComparativa() {
             error = termino();
             printf("Resultado TERMINO: %d\n",error);
             if (error) {
-                mensajeError("Error en termino.");
+                mensajeError("Error en termino.\n");
                 return 1;
             }  else {
-                printf("Termino encontrado");
+                printf("Termino encontrado\n");
                 return 0;
             }
             
