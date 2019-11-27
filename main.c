@@ -443,7 +443,7 @@ int lista_sentencias() {
 
 
     //Checar ID
-    if (miToken.token == 4 || miToken.token ==1) {
+    if (miToken.token == 4) {
         printf("Encontamos ID dentro de list\n");
         strcpy(nombre, miToken.valor);
         printf("ID: %s\n",nombre);
