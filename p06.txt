@@ -1,1 +1,9 @@
-mifunc ( a );
+inicio
+entero x = 5;
+entero funcion mifunc ( real b ){
+entero a = 1;
+c = 2;
+regresa b;
+};
+mientras; 
+fin;
