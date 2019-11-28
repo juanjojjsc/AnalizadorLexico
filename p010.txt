@@ -6,6 +6,17 @@ c = 2;
 regresa b;
 }
 casos ( a ){
-default { null }
+caso 1 {
+c = 9;
+fin;
 }
+caso 2 {
+d = 10;
+fin;
+}
+default {
+null;
+} 
+}
+fin;
 fin;

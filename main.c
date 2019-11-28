@@ -560,6 +560,13 @@ int lista_casos() {
     int error = 1;
     printf("Entramos a LISTA_CASOS\n");
 
+    if (miToken.token == 1) {
+        if(strcmp(miToken.valor,"fin")==0) {
+            printf("fin encontrado\n");
+            return 0;
+        }
+    }
+
     // Si es un null
     if(miToken.token == 1 && (strcmp(miToken.valor,"null")==0)) {
         printf("PALABRA RESERVADA: %s\n",miToken.valor);
@@ -573,8 +580,10 @@ int lista_casos() {
         error = caso();
         if (!error) {
             printf("Caso Correcto\n");
+            miToken = daToken();
             return lista_casos();     
         } else {
+            //miToken = daToken();
             error = default_();
             if (!error) {
                 printf("DEFAULT Correcto\n");
@@ -590,7 +599,9 @@ int lista_casos() {
 int caso() {
     int error = 1;
     char tipo[15];
-    printf("Entramos a CASO\n");
+    printf("Entramos a CASO con:\n");
+    printf("token: %d\n",miToken.token);
+    printf("valor: %s\n",miToken.valor);
 
     // Si es un caso
     if(miToken.token == 1) {
@@ -638,8 +649,13 @@ int caso() {
 
 //Funcion Gramatical
 int default_() {
+
+    //miToken = daToken();
     int error = 1;
-    printf("Entramos a Default\n");
+    printf("Entramos a Default con:\n");
+    printf("token: %d\n",miToken.token);
+    printf("valor: %s\n",miToken.valor);
+    //printf("simbolo: %s\n",miToken.simbolo);
 
     // Si es un default
     if(miToken.token == 1) {
@@ -921,24 +937,50 @@ int algoritmos() {
 
 
 //Funcion Gramatical
+int comentario() {
+    printf("DENTRO DE FUNCION COMENTARIO\n");
+    
+    int error = 0;
+}
+
+//Funcion Gramatical
 int sentencia() {
 
     printf("DENTRO DE FUNCION SENTENCIA\n");
     
     int error = 0;
 
-     if(miToken.token == 4) {
-
+    if(miToken.token == 8) {
+        printf("Vamos a validar comentario\n");
+        //Checar comentario
+        error = comentario();
+        if (!error) {
+            printf("No hubo error concomentario\n");
+            return 0;
+        } else {
+            return 1;
+            mensajeError("Error en comentario");
+        }
+    } else if(miToken.token == 4) {
         printf("Encontramos id.....\n");
-
         error = expresionAsignacion();
-
         if (!error) {
             printf("No hubo error con exp Asignacion\n");
             return 0;
         } else {
             return 1;
             mensajeError("Error en expresion de asignacion");
+        }
+    } else {
+        //Si encontramos termino
+        //si el siguiente es un termino
+        error = termino();
+        printf("Resultado TERMINO: %d\n",error);
+        if (error) {
+            mensajeError("Error en termino.");
+            return 1;
+        }  else {
+            mensajeError("termino encontrado\n");
         }
     } 
 }
