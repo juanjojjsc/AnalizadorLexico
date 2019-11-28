@@ -503,7 +503,66 @@ int lista_sentencias() {
 
 //Funcion Gramatical
 int ciclo() {
-    
+    int error = 1;
+    printf("Entramos a Ciclo\n");
+
+    // Si es un ciclo
+    if(miToken.token == 1) {
+        printf("PALABRA RESERVADA: %s\n",miToken.valor);
+        printf("Comp: %d\n",strcmp(miToken.valor,"ciclo"));
+        if(strcmp(miToken.valor,"ciclo")==0) {
+            printf("ciclo encontrado\n");
+            miToken = daToken();
+            //Checar parentesis
+            if (miToken.token == 8) {
+                if(miToken.simbolo == '(') {
+                    printf("Parentesis ( encontrado\n");
+                    miToken = daToken();
+                    error = expresionAsignacion();
+                    if (!error) {
+                        printf("Expresion Agsignacion Correcta\n");
+                        miToken = daToken();
+                        error = expresionComparativa();
+                        if (!error) {
+                            printf("Expresion Comparativa Correcta\n");
+                            miToken = daToken();
+                            error = expresionIncremental();
+                            if (!error) {
+                                printf("Expresion Incremental Correcta\n");
+                                miToken = daToken();
+                                //Checar parentesis
+                                if (miToken.token == 8) {
+                                    if(miToken.simbolo == ')') {
+                                        printf("Parentesis ) encontrado\n");
+                                        miToken = daToken();
+                                        //Checar corchete
+                                        if (miToken.token == 8) {
+                                            if(miToken.simbolo == '{') {
+                                                printf("Corchete { encontrado\n");
+                                                miToken = daToken();
+                                                error = lista_sentencias();
+                                                if (!error) {
+                                                    printf("Lista Sentencias Correcta\n");
+                                                    miToken = daToken();
+                                                    //Checar corchete
+                                                    if (miToken.token == 8) {
+                                                        if(miToken.simbolo == '}') {
+                                                            printf("Corchete } encontrado\n");
+                                                            return 0;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 
 
 }
@@ -644,7 +703,7 @@ int algoritmos() {
     if (miToken.token == 1) {
         //Definir sentencia
 
-        //error = ciclo();
+        error = ciclo();
         if (!error) {
             printf("Ciclo Compilado\n");
             return 0;
@@ -792,9 +851,12 @@ int expresionIncremental() {
         return 1;
     }  else {
         miToken = daToken();
+        printf("token: %d\n",miToken.token);
+        printf("valor: %s\n",miToken.valor);
         //Checar Operador Incremental
         if (miToken.token == 5) {
-            if(strcmp(miToken.valor,"++")) {
+
+            if(strcmp(miToken.valor,"++")==0) {
                 printf("Operador Incremental encontrado\n");
                 return 0;
             }

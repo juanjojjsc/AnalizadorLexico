@@ -1,0 +1,9 @@
+inicio
+entero x = 5;
+entero funcion mifunc ( real b fin; ){
+entero a = 1;
+c = 2;
+regresa b;
+};
+ciclo ( i = 1; i < 10; i ++ ) { a = 1; }
+fin;
