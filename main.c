@@ -56,6 +56,10 @@ int condSi();
 int ciclo();
 int mientras();
 int casos();
+int lista_casos();
+int caso();
+int default_();
+int comentario();
 int llamaFuncion();
 int checaReservada(struct Entrada x, char* palabra);
 int checaSimbolo(struct Entrada x, char simbolo);
@@ -468,12 +472,9 @@ int lista_sentencias() {
         error = algoritmos();
         printf("Resultado de algoritmos: %d\n",error);
         return 0;
-
         if(!checaReservada(miToken,"fin")) {
-
             printf("fin encontrado\n");
-            return 0;
-        
+            return 0;        
         } 
     } else
 
@@ -492,14 +493,194 @@ int lista_sentencias() {
         } else {
             printf("No hubo error con lista_sentencias\n");
             return lista_sentencias();
+        }   
+    }
+}
+
+//Funcion Gramatical
+int casos() {
+    int error = 1;
+    char nombre[15];
+    printf("Entramos a CASOS\n");
+    // Si es un casos
+    if(miToken.token == 1) {
+        printf("PALABRA RESERVADA: %s\n",miToken.valor);
+        printf("Comp: %d\n",strcmp(miToken.valor,"casos"));
+        if(strcmp(miToken.valor,"casos")==0) {
+            printf("casos encontrado\n");
+            miToken = daToken();
+            //Checar parentesis
+            if (miToken.token == 8) {
+                if(miToken.simbolo == '(') {
+                    printf("Parentesis ( encontrado\n");
+                    miToken = daToken();
+                    //Checar ID
+                    if (miToken.token == 4) {
+                        printf("Encontamos ID en expresion asignacion\n");
+                        strcpy(nombre, miToken.valor);
+                        printf("ID: %s\n",nombre);
+                        miToken = daToken();
+                        printf("El siguiente token fue... %d\n",miToken.token);
+                        //Checar parentesis
+                        if (miToken.token == 8) {
+                            if(miToken.simbolo == ')') {
+                                printf("Parentesis ) encontrado\n");
+                                miToken = daToken();
+                                //Checar Corchete
+                                if (miToken.token == 8) {
+                                    if(miToken.simbolo == '{') {
+                                        printf("Corchete { encontrado\n");
+                                        miToken = daToken();
+                                        error = lista_casos();
+                                        if (!error) {
+                                            printf("Lista de Casos Correcta\n");
+                                            //Checar Corchete
+                                            if (miToken.token == 8) {
+                                                if(miToken.simbolo == '}') {
+                                                    printf("Corchete } encontrado\n");
+                                                    printf("CASOS COMPILADOS\n");
+                                                    return 0;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
-        
+    }
+}
+
+//Funcion Gramatical
+int lista_casos() {
+
+    int error = 1;
+    printf("Entramos a LISTA_CASOS\n");
+
+    // Si es un null
+    if(miToken.token == 1 && (strcmp(miToken.valor,"null")==0)) {
+        printf("PALABRA RESERVADA: %s\n",miToken.valor);
+        printf("Comp: %d\n",strcmp(miToken.valor,"null")==0);
+        if(strcmp(miToken.valor,"null")==0) {
+            printf("null encontrado\n");
+            return 0;
+        }
+        // Si es un caso
+    } else {
+        error = caso();
+        if (!error) {
+            printf("Caso Correcto\n");
+            return lista_casos();     
+        } else {
+            error = default_();
+            if (!error) {
+                printf("DEFAULT Correcto\n");
+                return 0;   
+            }
+        }
     }
 
-    
-    
 
 }
+
+//Funcion Gramatical
+int caso() {
+    int error = 1;
+    char tipo[15];
+    printf("Entramos a CASO\n");
+
+    // Si es un caso
+    if(miToken.token == 1) {
+        printf("PALABRA RESERVADA: %s\n",miToken.valor);
+        printf("Comp: %d\n",strcmp(miToken.valor,"caso"));
+        if(strcmp(miToken.valor,"caso")==0) {
+            printf("caso encontrado\n");
+            miToken = daToken();
+            printf("Token: %d\n",miToken.token);
+            printf("Valor: %d\n",miToken.valor);
+            // si es sgte token es "LITERAL"
+            if (miToken.token == 2) {
+                printf("SI es literal\n");
+                strcpy(tipo, miToken.valor);
+                printf("LITERAL: %s\n",tipo);
+                // Si es ENTERO
+                printf("Comp: %d\n",strcmp(miToken.valor,"Entero"));
+                if(strcmp(miToken.valor,"Entero")==0) {
+                    printf("ENTERO ENCONTRADO\n");
+                    miToken = daToken();
+                    //Checar corchete
+                    if (miToken.token == 8) {
+                        if(miToken.simbolo == '{') {
+                            printf("Corchete { encontrado\n");
+                            error = lista_sentencias();
+                            if (!error) {
+                                printf("Lista de Sentencias Correcta\n");
+                                miToken = daToken();
+                                //Checar corchete
+                                if (miToken.token == 8) {
+                                    if(miToken.simbolo == '}') {
+                                        printf("Corchete } encontrado\n");
+                                        printf("CASO CORRECTO\n");
+                                        return 0;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+//Funcion Gramatical
+int default_() {
+    int error = 1;
+    printf("Entramos a Default\n");
+
+    // Si es un default
+    if(miToken.token == 1) {
+        printf("PALABRA RESERVADA: %s\n",miToken.valor);
+        printf("Comp: %d\n",strcmp(miToken.valor,"default"));
+        if(strcmp(miToken.valor,"default")==0) {
+            printf("default encontrado\n");
+            miToken = daToken();
+            //Checar corchete
+            if (miToken.token == 8) {
+                if(miToken.simbolo == '{') {
+                    printf("Corchete { encontrado\n");
+                    // Si es un null
+                    if(miToken.token == 1) {
+                        printf("PALABRA RESERVADA: %s\n",miToken.valor);
+                        printf("Comp: %d\n",strcmp(miToken.valor,"null"));
+                        if(strcmp(miToken.valor,"null")==0) {
+                            printf("null encontrado\n");
+                            return 0;
+                        }
+                        // Si es una lista_Sentencias
+                    } else {
+                        error = lista_sentencias();
+                        if (!error) {
+                            printf("Lista de Sentencias Correcta\n");
+                            miToken = daToken();
+                            //Checar corchete
+                            if (miToken.token == 8) {
+                                if(miToken.simbolo == '}') {
+                                    printf("Corchete } encontrado\n");
+                                    return 0;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 
 //Funcion Gramatical
 int ciclo() {
@@ -720,9 +901,9 @@ int algoritmos() {
                     return 0;
                 
                 } else {
-                    //error = casos();
+                    error = casos();
                     if (!error) {
-                        printf("Casos Encontrado");
+                        printf("Casos Encontrado\n");
                         return 0;
                     } else {
                         //error = llamaFuncion();
