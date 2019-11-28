@@ -539,7 +539,6 @@ int ciclo() {
                                         if (miToken.token == 8) {
                                             if(miToken.simbolo == '{') {
                                                 printf("Corchete { encontrado\n");
-                                                miToken = daToken();
                                                 error = lista_sentencias();
                                                 if (!error) {
                                                     printf("Lista Sentencias Correcta\n");
@@ -548,6 +547,7 @@ int ciclo() {
                                                     if (miToken.token == 8) {
                                                         if(miToken.simbolo == '}') {
                                                             printf("Corchete } encontrado\n");
+                                                            printf("Ciclo Compilado Correctamente\n");
                                                             return 0;
                                                         }
                                                     }

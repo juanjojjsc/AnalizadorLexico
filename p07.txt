@@ -1,9 +1,0 @@
-inicio
-entero x = 5;
-entero funcion mifunc ( real b fin; ){
-entero a = 1;
-c = 2;
-regresa b;
-};
-hacer { k = 7 fin; } mientras ( a < 2 );
-fin;
