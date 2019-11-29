@@ -28,8 +28,11 @@ int esCorchete(char ch);
 //Funcion para validar Llaves
 int esLlave(char ch);
 
-//Funcion para validar Booleanos dentro de un buffer
+//Funcion para validar Booleanos
 int esBooleano(char ch);
+
+//Funcion para validar Caracteres
+int esCaracter(char ch);
 
 
 

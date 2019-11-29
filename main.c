@@ -1501,10 +1501,30 @@ struct Entrada daToken() {
         
         //Incrementar el indice en cada pasada
         fileIndex++;
+
         
         return e;
     }
 
+    //Checar Caracteres que comienzan con comilla
+    if (data[fileIndex] == '\'') {
+        
+        fileIndex++;
+
+        e.token = 2;
+        e.valor = "-";
+        e.simbolo = data[fileIndex];
+
+        //Saltarse la siguiente comilla
+        fileIndex++;
+        //Continuar
+        fileIndex++;
+
+        return e;
+    }
+
+
+    //Checar Booleanos
     caracterSencilloFlag = esBooleano(data[fileIndex]);
     if (caracterSencilloFlag) {
         #ifdef DDEBUG

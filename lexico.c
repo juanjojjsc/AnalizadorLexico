@@ -74,6 +74,20 @@ int esBooleano(char ch){
     return 0;
 }
 
+//Checar Caracteres
+int esCaracter(char ch){
+    char operadoresBooleanos[] = "~!@#$^&*()_+1234567890-=<>?qwertyuiopasdfghjklzxcvbnm";
+    for(int i = 0; i < 53; ++i){
+        if(ch == operadoresBooleanos[i]) {
+            #ifdef DEBUG
+                imprimirTokenCh(ch,"Booleano");
+            #endif
+            return 1;
+        }
+    }
+    return 0;
+}
+
 //---------------------------- Validaciones Con Buffer --------------------------
 
 //Checar Operadores Relacionales
