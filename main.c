@@ -976,7 +976,38 @@ int condSi() {
                                                 if(miToken.simbolo == '}') {
                                                     printf("Corchete } encontrado\n");
                                                     printf("COND SI COMPILADO\n");
-                                                    return 0;
+                                                    miToken = daToken();
+                                                    // Si es un sino
+                                                    if(miToken.token == 1) {
+                                                        printf("PALABRA RESERVADA: %s\n",miToken.valor);
+                                                        printf("Comp: %d\n",strcmp(miToken.valor,"sino"));
+                                                        if(strcmp(miToken.valor,"sino")==0) {
+                                                            printf("sino encontrado\n");
+                                                            miToken = daToken();
+                                                            //Checar Corchete
+                                                            if (miToken.token == 8) {
+                                                                if(miToken.simbolo == '{') {
+                                                                    printf("Corchete { encontrado\n");
+                                                                    error = lista_sentencias();
+                                                                    printf("Resultado: %d\n",error);
+                                                                    if (!error) {
+                                                                        printf("Lista_Sentencias Correcta\n");
+                                                                        miToken = daToken();
+                                                                        //Checar Corchete
+                                                                        if (miToken.token == 8) {
+                                                                            if(miToken.simbolo == '}') {
+                                                                                printf("Corchete } encontrado\n");
+                                                                                printf("COND SINO COMPILADO\n");
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    } else {
+                                                        //CondSI Sencilla completa
+                                                        return 0;
+                                                    }
                                                 }
                                             }
                                         }

@@ -1,0 +1,16 @@
+inicio
+entero x = 5;
+entero funcion mifunc ( real b fin; ){
+entero a = 1;
+c = 2;
+regresa b;
+}
+si ( a < 2 ){
+y = 5;
+fin;
+} sino {
+y = 0;
+fin;
+}
+fin;
+fin;
