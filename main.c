@@ -1244,22 +1244,13 @@ int expresionAsignacion() {
 // Funcion Gramatical
 int def_funciones() {
 
-    printf("Adentro de Def_Funciones\n");
+    printf("Adentro de Def_Funciones con\n");
+    printf("token: %d\n",miToken.token);
+    printf("valor: %s\n",miToken.valor);
 
     int error = 0;
 
-    if (miToken.token == 1) {
-
-        printf("PALABRA RESERVADA: %s\n",miToken.valor);
-
-        if(!checaReservada(miToken,"null")) {
-                // regrsar 0 es no hubo error
-            return 0;
-        } else {
-            mensajeError("ERROR VARIABLE DECLARADA INCORRECTAMENTE");
-            return 1;
-        }
-    }
+    
 
     //Checar que no haya error con funcion
     error = funcion();
@@ -1289,6 +1280,17 @@ int funcion() {
     printf("Token: %d\n",miToken.token);
     printf("Valor: %s\n",miToken.valor);
     printf("Simbolor: %c\n",miToken.simbolo);
+
+    if (miToken.token == 1) {
+
+        printf("PALABRA RESERVADA: %s\n",miToken.valor);
+
+        printf("Comp: %d\n",strcmp(miToken.valor,"null"));
+        if(strcmp(miToken.valor,"null")==0) {
+            printf("null encontrado\n");
+            return 0;
+        }
+    }
 
     // si es sgte token es "Tipo"
     if (miToken.token == 9) {
