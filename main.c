@@ -467,6 +467,17 @@ int lista_sentencias() {
     printf("Resultado de compara: %d\n",res);
 
 
+    if (miToken.token == 8) {
+        printf("Es Simbolo\n");
+        error = comentario();
+        printf("Resultado de Comentario: %d\n",error);
+        if(!error) {
+            printf("Comentario encontrado\n");
+            return lista_sentencias();        
+        } 
+    }
+
+
     if (miToken.token == 1) {
         printf("Es reservada\n");
         error = algoritmos();
@@ -1025,9 +1036,20 @@ int condSi() {
 
 //Funcion Gramatical
 int comentario() {
-    printf("DENTRO DE FUNCION COMENTARIO\n");
-    
+
+    miToken = daToken();
     int error = 0;
+    printf("DENTRO DE FUNCION COMENTARIO\n");
+    if (miToken.token == 1) {
+        if(!checaReservada(miToken,"fin")) {
+            printf("fin del comentario encontrado\n");
+            return 0;        
+        } 
+    } else {
+        printf("Comentario sigue...\n");
+        return comentario();
+    }
+    
 }
 
 //Funcion Gramatical

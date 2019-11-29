@@ -1,0 +1,10 @@
+inicio
+entero x = 5;
+entero funcion mifunc ( real b fin; ){
+entero a = 1;
+c = 2;
+regresa b;
+}
+// esto es un comentario fin;
+fin;
+fin;
