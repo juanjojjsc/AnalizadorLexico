@@ -1,6 +1,0 @@
-inicio
-entero x = 5;
-null;
-// esto es un comentario fin;
-fin;
-fin;

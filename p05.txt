@@ -1,9 +1,0 @@
-inicio
-entero x = 5;
-entero funcion mifunc ( real b ){
-entero a = 1;
-a = 2;
-regresa b;
-};
-a = 3;
-fin;

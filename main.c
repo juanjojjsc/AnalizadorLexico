@@ -256,6 +256,16 @@ int def_variables() {
     printf("Valor: %s\n",miToken.valor);
     printf("Simbolor: %c\n",miToken.simbolo);
 
+    // Si es un casos
+    if(miToken.token == 1) {
+        printf("PALABRA RESERVADA: %s\n",miToken.valor);
+        printf("Comp: %d\n",strcmp(miToken.valor,"fin"));
+        if(strcmp(miToken.valor,"fin")==0) {
+            printf("fin encontrado\n");
+            return 0;
+        }
+    }
+
     // si es sgte token es "Tipo"
     if (miToken.token == 9) {
         printf("SI - 1\n");
@@ -280,14 +290,14 @@ int def_variables() {
                     // EL LEXICO SOLAMENTE DA TOKENS, NO HACE REGISTROS EN LA TABLA
 
                     // REGISTRAR
-                    return 0;
+                    return def_variables();
 
                 }
             }
             
 
             //LLAMADA RECURSIVA
-            return def_variables();
+            //return def_variables();
         } else {
             mensajeError("error");
             return 1;
@@ -913,6 +923,25 @@ int algoritmos() {
     printf("Simbolo: %c\n",miToken.simbolo);
 
 
+    // Si es un null
+    if(miToken.token == 1) {
+        printf("PALABRA RESERVADA: %s\n",miToken.valor);
+        printf("Comp: %d\n",strcmp(miToken.valor,"null"));
+        if(strcmp(miToken.valor,"null")==0) {
+            printf("null encontrado\n");
+            return 0;
+        }
+    }
+
+    // Si es un fin
+    if(miToken.token == 1) {
+        printf("PALABRA RESERVADA: %s\n",miToken.valor);
+        printf("Comp: %d\n",strcmp(miToken.valor,"fin"));
+        if(strcmp(miToken.valor,"fin")==0) {
+            printf("fin encontrado\n");
+            return 0;
+        }
+    }
 
 
 
