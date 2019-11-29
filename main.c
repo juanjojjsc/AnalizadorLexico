@@ -905,11 +905,21 @@ int algoritmos() {
     printf("Valor: %s\n",miToken.valor);
     printf("Simbolo: %c\n",miToken.simbolo);
 
+
+
+
+
     int error = 1;
 
     //Si es una sentencia que empieze con palabra reservada
     if (miToken.token == 1) {
         //Definir sentencia
+
+        printf("Comp: %d\n",strcmp(miToken.valor,"fin"));
+        if(strcmp(miToken.valor,"fin")==0) {
+            printf("fin encontrado\n");
+            return 0;
+        }
 
         error = ciclo();
         if (!error) {
