@@ -910,8 +910,7 @@ int algoritmos() {
                 printf("Mientras Compilado\n");
                 return 0;
             } else {
-                
-                //error = condSi();
+                error = condSi();
                 if (!error) {
                     printf("Cond Si Encontrado\n");
                     return 0;
@@ -927,6 +926,63 @@ int algoritmos() {
                             printf("Llama funcion Encontrado");
                             return 0;
                         
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+//Funcion Gramatical
+int condSi() {
+    printf("DENTRO DE FUNCION CONDSI\n");
+    
+    int error = 0;
+    // Si es un si
+    if(miToken.token == 1) {
+        printf("PALABRA RESERVADA: %s\n",miToken.valor);
+        printf("Comp: %d\n",strcmp(miToken.valor,"si"));
+        if(strcmp(miToken.valor,"si")==0) {
+            printf("si encontrado\n");
+            miToken = daToken();
+            //Checar parentesis
+            if (miToken.token == 8) {
+                if(miToken.simbolo == '(') {
+                    printf("Parentesis ( encontrado\n");
+                    miToken = daToken();
+                    error = condicion();
+                    printf("Resultado: %d\n",error);
+                    if (!error) {
+                        printf("Condicion Correcta\n");
+                        miToken = daToken();
+                        //Checar parentesis
+                        if (miToken.token == 8) {
+                            if(miToken.simbolo == ')') {
+                                printf("Parentesis ) encontrado\n");
+                                miToken = daToken();
+                                //Checar Corchete
+                                if (miToken.token == 8) {
+                                    if(miToken.simbolo == '{') {
+                                        printf("Corchete { encontrado\n");
+                                        error = lista_sentencias();
+                                        printf("Resultado: %d\n",error);
+                                        if (!error) {
+                                            printf("Lista_Sentencias Correcta\n");
+                                            miToken = daToken();
+                                            //Checar Corchete
+                                            if (miToken.token == 8) {
+                                                if(miToken.simbolo == '}') {
+                                                    printf("Corchete } encontrado\n");
+                                                    printf("COND SI COMPILADO\n");
+                                                    return 0;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }
