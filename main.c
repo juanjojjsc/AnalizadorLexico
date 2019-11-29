@@ -364,48 +364,55 @@ int argumentos() {
 // Funcion Gramatical
 int llamaFuncion() {
 
+    printf("Dentro de llamaFuncion\n");
+
     int error = 0;
     // char tipo[15];
     char nombre[15];
     //struct Entrada miToken;
-    miToken = daToken();
+    //miToken = daToken();
     
     printf("Token: %d\n",miToken.token);
     printf("Valor: %s\n",miToken.valor);
     printf("Simbolo: %c\n",miToken.simbolo);
 
     //Checar ID
-    if (miToken.token == 4) {
-        printf("SI - ID\n");
-        strcpy(nombre, miToken.valor);
-        printf("ID: %s\n",nombre);
-        miToken = daToken();
-        //Checar parentesis
-        if (miToken.token == 8) {
-            if(miToken.simbolo == '(') {
-                printf("Parentesis ( encontrado\n");
-                //Checar Argumentos de llamada
-                error = argumentosLlamada();
-                if (!error) {
-                    miToken = daToken();
-                    //Checar parentesis
-                    if (miToken.token == 8) {
-                        if(miToken.simbolo == ')') {
-                            printf("Parentesis ) encontrado\n");
-                            return 0;
+    // Si es un casos
+    if(miToken.token == 1) {
+        printf("PALABRA RESERVADA: %s\n",miToken.valor);
+        printf("Comp: %d\n",strcmp(miToken.valor,"llama"));
+        if(strcmp(miToken.valor,"llama")==0) {
+            printf("llama encontrado\n");
+            miToken = daToken();
+            if (miToken.token == 4) {
+                printf("SI - ID\n");
+                strcpy(nombre, miToken.valor);
+                printf("ID: %s\n",nombre);
+                miToken = daToken();
+                //Checar parentesis
+                if (miToken.token == 8) {
+                    if(miToken.simbolo == '(') {
+                        printf("Parentesis ( encontrado\n");
+                        //Checar Argumentos de llamada
+                        error = argumentosLlamada();
+                        if (!error) {
+                            miToken = daToken();
+                            //Checar parentesis
+                            if (miToken.token == 8) {
+                                if(miToken.simbolo == ')') {
+                                    printf("Parentesis ) encontrado\n");
+                                    return 0;
+                                } else return 1;
+                            } else return 1;
                         } else return 1;
                     } else return 1;
                 } else return 1;
-            } else return 1;
-        } else return 1;
-
-    } else {
-        return 1;
-        mensajeError("Error en llamada de funcion");
+            } else {
+                return 1;
+                mensajeError("Error en llamada de funcion");
+            }
+        }
     }
-
-
-
 }
 
 // Funcion Gramatical
@@ -935,18 +942,16 @@ int algoritmos() {
                 if (!error) {
                     printf("Cond Si Encontrado\n");
                     return 0;
-                
                 } else {
                     error = casos();
                     if (!error) {
                         printf("Casos Encontrado\n");
                         return 0;
                     } else {
-                        //error = llamaFuncion();
+                        error = llamaFuncion();
                         if (!error) {
-                            printf("Llama funcion Encontrado");
+                            printf("Llama Funcion Encontrada\n");
                             return 0;
-                        
                         }
                     }
                 }
@@ -1086,10 +1091,7 @@ int sentencia() {
         if (!error) {
             printf("No hubo error con exp Asignacion\n");
             return 0;
-        } else {
-            return 1;
-            mensajeError("Error en expresion de asignacion");
-        }
+        } 
     } else {
         //Si encontramos termino
         //si el siguiente es un termino
@@ -1100,6 +1102,7 @@ int sentencia() {
             return 1;
         }  else {
             mensajeError("termino encontrado\n");
+            return 0;
         }
     } 
 }

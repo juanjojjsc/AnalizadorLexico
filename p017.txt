@@ -1,0 +1,6 @@
+inicio
+null;
+null;
+llama mifunc ( 6 );
+fin;
+fin;

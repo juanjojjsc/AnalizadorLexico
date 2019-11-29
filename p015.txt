@@ -1,0 +1,6 @@
+inicio
+null;
+null;
+// esto es un comentario fin;
+fin;
+fin;

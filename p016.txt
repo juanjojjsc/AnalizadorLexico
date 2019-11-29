@@ -1,0 +1,6 @@
+inicio
+null;
+null;
+si ( a < 2 ){ a = 1; fin; }
+fin;
+fin;
