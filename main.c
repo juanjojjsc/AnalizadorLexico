@@ -14,6 +14,7 @@ struct TablaSimbolos
     char tipo[20];
     char simbolo[20];
     char token[20];
+    char regresa[20];
     char scope[20];
     int addr;
     //Apuntador al siguiente elemento de la Lista Ligada
@@ -51,7 +52,7 @@ int expresionAsignacion();
 int termino();
 int expresionComparativa();
 int expresionIncremental();
-int argumentos();
+int argumentos(char* nombre, char* tipo);
 int argumentosLlamada();
 int condSi();
 int ciclo();
@@ -263,7 +264,7 @@ int def_variables() {
                     printf("SI - 4\n");
                     // HASTA AQUI,DAR DE ALTA EN LA TABLA DE SIMBOLOS
                     // REGISTRAR
-                    insertarRegistro(addrTabla,"Variable",nombre,tipo,"Global");
+                    insertarRegistro(addrTabla,"Variable",nombre,tipo,"-","Global");
                     imprimirListaLigada();
                     addrTabla++;
 
@@ -300,13 +301,13 @@ int def_variables() {
 
 
 // Funcion Gramatical
-int argumentos() {
+int argumentos(char* nombre, char* tipo) {
 
     
 
     // int error = 0;
-    char tipo[15];
-    char nombre[15];
+    char tipoArg[15];
+    char nombreArg[15];
     // struct Entrada miToken;
     miToken = daToken();
     
@@ -328,17 +329,23 @@ int argumentos() {
     // si es sgte token es "Tipo"
     if (miToken.token == 9) {
         printf("SI - Tipo\n");
-        strcpy(tipo, miToken.valor);
+        strcpy(tipoArg, miToken.valor);
         printf("TIPO: %s\n",tipo);
         miToken = daToken();
         //Checar ID
         if (miToken.token == 4) {
             printf("SI - ID\n");
-            strcpy(nombre, miToken.valor);
+            strcpy(nombreArg, miToken.valor);
             printf("ID: %s\n",nombre);
-
+            //REGISTRAR FUNCION
+            insertarRegistro(addrTabla, "Funcion\t", nombre, tipo, tipoArg, "Global");
+            addrTabla++;
+            //REGISTRAR ARGUMENTO COMO VARIABLE LOCAL
+            insertarRegistro(addrTabla, "Variable", nombreArg, tipoArg, "-", nombre);
+            imprimirListaLigada();
+            addrTabla++;
             //Llamada recursiva
-            return argumentos();
+            return argumentos(nombre, tipo);
         } else {
             return 1;
         }
@@ -1329,7 +1336,7 @@ int funcion() {
                         if(miToken.simbolo == '(') {
                             printf("Parentesis ( encontrado\n");
                             //Checar argumentos
-                            error = argumentos();
+                            error = argumentos(nombre,tipo);
                             if (!error) {
                                 printf("Argumentos correctos\n");
                                 miToken = daToken();
@@ -1724,7 +1731,7 @@ struct Entrada daToken() {
 
 
 // Funcion para insertar un nuevo registro en la Tabla de Simbolos
-void insertarRegistro(int addr, char token[], char symbol[], char type[], char scope[]){
+void insertarRegistro(int addr, char token[], char symbol[], char type[], char regresa[], char scope[]){
     
 
     //Llamar funcion buscaRegistro para asegurar que no haya repeticion
@@ -1744,6 +1751,7 @@ void insertarRegistro(int addr, char token[], char symbol[], char type[], char s
         strcpy(p->tipo,type);
         strcpy(p->scope,scope);
         strcpy(p->token,token);
+        strcpy(p->regresa,regresa);
 
         p->addr = addr;
     
@@ -1776,10 +1784,10 @@ void imprimirListaLigada()
     #ifdef DDEBUG
         printf("Current Address: %p\n",&p);
     #endif
-    printf("\n\tDIRECCION\t\tTOKEN\t\tID\t\tTIPO\t\t\tSCOPE\n");
+    printf("\n\tDIRECCION\tTOKEN\t\t\tID\t\tTIPO\t\tREGRESA\t\tSCOPE\n");
     //Recorrer cada elemento de la lista ligada e imprimir sus atributos
     for(i=0;i<size;i++) {
-        printf("\t%d\t\t\t%s\t%s\t\t%s\t\t\t%s\n",p->addr,p->token,p->simbolo,p->tipo,p->scope);
+        printf("\t%d\t\t%s\t\t%s\t\t%s\t\t%s\t\t%s\n",p->addr,p->token,p->simbolo,p->tipo,p->regresa,p->scope);
         p = p->next;
     }
     printf("\n\n");
