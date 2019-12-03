@@ -82,8 +82,7 @@ void imprimirTokenCh(char ch, char tipo[]);
 //-------------------------------- Funciones de la Tabla de Simbolos ---------------
 
 // Funcion para insertar un nuevo registro en la Tabla de Simbolos
-void insertarRegistro(char symbol[], char type[], int addr);
-
+void insertarRegistro(int addr, char token[], char symbol[], char type[], char scope[]);
 // Funcion para mostrar todos los registros de la Tabla de Simbolos
 void imprimirListaLigada();
 

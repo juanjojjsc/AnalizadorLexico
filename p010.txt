@@ -1,19 +1,20 @@
 inicio
 entero x = 5;
+entero a = 2;
 fin;
-entero funcion mifunc ( real b fin; ){
-entero a = 1;
+entero funcion mifunc ( real d fin; ){
+entero b = 1;
 fin;
-c = 2;
+d = 2;
 regresa b;
 }
 casos ( a ){
 caso 1 {
-c = 9;
+x = 9;
 fin;
 }
 caso 2 {
-d = 10;
+x = 10;
 fin;
 }
 default {

@@ -1,3 +1,0 @@
-entero var1 = 5212;
-booleano var2 = V;
-real var3 = 3.5;

@@ -1,6 +1,11 @@
 inicio
 null;
-null;
-llama mifunc ( 6 );
+entero funcion mifunc ( real d fin; ){
+entero b = 1;
+fin;
+d = 2;
+regresa b;
+}
+llama mifunc ( 6.1 );
 fin;
 fin;

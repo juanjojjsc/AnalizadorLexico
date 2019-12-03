@@ -1,13 +1,14 @@
 inicio
 entero x = 5;
+entero i = 0;
 fin;
-entero funcion mifunc ( real b fin; ){
-entero a = 1;
+entero funcion mifunc ( real d fin; ){
+entero b = 1;
 fin;
-c = 2;
+d = 2;
 regresa b;
 }
 ciclo ( i = 1; i < 10; i ++ ){ 
-a = 1 fin;
+x = 1 fin;
 }
 fin;

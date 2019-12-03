@@ -1,4 +1,0 @@
-hacer
-{ a ++;
-b <= c;
-} mientras ( i < 10 );

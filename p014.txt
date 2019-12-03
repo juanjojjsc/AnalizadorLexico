@@ -1,0 +1,13 @@
+inicio
+entero x = 5;
+fin;
+null;
+si ( x < 2 ){
+x = 0;
+fin;
+} sino {
+x = 10;
+fin;
+}
+fin;
+fin;

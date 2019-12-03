@@ -1,6 +1,10 @@
 inicio
+entero a = 0;
+fin;
 null;
-null;
-si ( a < 2 ){ a = 1; fin; }
+si ( a < 2 ){ 
+a = 1; 
+fin; 
+}
 fin;
 fin;

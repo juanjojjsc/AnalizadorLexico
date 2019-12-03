@@ -1,0 +1,26 @@
+inicio
+funcion mifuncion ( mivar1 ) 
+{
+real mivar2 = 3.5;
+}
+ciclo ( i = 0; i <= 3; i ++ )
+{
+b ++; 
+}
+casos ( a )
+{ 
+caso 1 b = 1; 
+caso 2 b = 2;
+};
+entero var1 = 5212;
+booleano var2 = V;
+real var3 = 3.5;
+caracter var4 = '$';
+si ( V )
+{ a = 1; }
+sino 
+{ a = 2; }
+a = 1;
+a + 2;
+a - 2;
+a * 2;

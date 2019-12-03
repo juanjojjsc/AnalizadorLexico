@@ -11,9 +11,10 @@
 //Estructura para cada elemento de la Lista Ligada
 struct TablaSimbolos
 {
-    char type[20];
-    char symbol[20];
-    char value[20];
+    char tipo[20];
+    char simbolo[20];
+    char token[20];
+    char scope[20];
     int addr;
     //Apuntador al siguiente elemento de la Lista Ligada
     struct TablaSimbolos *next;
@@ -76,6 +77,7 @@ char data[255];
 int j = 0;
 int caracterSencilloFlag = 0;
 int idNumero = 1;
+int addrTabla = 1;
 int fileLenght = 0;
 int bufferSize = 0;
 int fileIndex = 0;
@@ -142,41 +144,13 @@ int main(int argc, char **argv) {
 
 
     // LLAMADAS A FUNCIONES DE GRAMATICA ////////////////////////////////////
-
-
     programa();
-    // printf("llamaFuncion: %d\n",llamaFuncion());
 
-
-
-    
-
-
-    
-
-    // miToken = daToken();
-    // printf("\tTOKEN: %d\tVALOR: %s\tSIMBOLO: %c\t ADDR: %d\n\n",miToken.token,miToken.valor,miToken.simbolo,miToken.addr);
-
-    // miToken = daToken();
-    // printf("\tTOKEN: %d\tVALOR: %s\tSIMBOLO: %c\t ADDR: %d\n\n",miToken.token,miToken.valor,miToken.simbolo,miToken.addr);
-
-    // miToken = daToken();
-    // printf("\tTOKEN: %d\tVALOR: %s\tSIMBOLO: %c\t ADDR: %d\n\n",miToken.token,miToken.valor,miToken.simbolo,miToken.addr);
-
-    // miToken = daToken();
-    // printf("\tTOKEN: %d\tVALOR: %s\tSIMBOLO: %c\t ADDR: %d\n\n",miToken.token,miToken.valor,miToken.simbolo,miToken.addr);
-
-    // miToken = daToken();
-    // printf("\tTOKEN: %d\tVALOR: %s\tSIMBOLO: %c\t ADDR: %d\n\n",miToken.token,miToken.valor,miToken.simbolo,miToken.addr);
-
-    // miToken = daToken();
-    // printf("\tTOKEN: %d\tVALOR: %s\tSIMBOLO: %c\t ADDR: %d\n\n",miToken.token,miToken.valor,miToken.simbolo,miToken.addr);
-
-    // miToken = daToken();
-    // printf("\tTOKEN: %d\tVALOR: %s\tSIMBOLO: %c\t ADDR: %d\n\n",miToken.token,miToken.valor,miToken.simbolo,miToken.addr);
-
-    // miToken = daToken();
-    // printf("\tTOKEN: %d\tVALOR: %s\tSIMBOLO: %c\t ADDR: %d\n\n",miToken.token,miToken.valor,miToken.simbolo,miToken.addr);
+    //Descomentar para Validar Tokens
+    // for(int i=0; i<86; i++) {
+    //     miToken = daToken();
+    //     printf("\tTOKEN: %d\tVALOR: %s\tSIMBOLO: %c\n\n",miToken.token,miToken.valor,miToken.simbolo);
+    // }
 
     
     return 0;
@@ -234,6 +208,7 @@ void programa() {
         printf("Vamos a checar si hay fin en: %d\n",miToken.token);
         if(!checaReservada(miToken,"fin")) {
             printf("EXITO\n");
+            imprimirListaLigada();
         } else {
             mensajeError("ERROR, FALTA FIN");
         }
@@ -256,7 +231,7 @@ int def_variables() {
     printf("Valor: %s\n",miToken.valor);
     printf("Simbolor: %c\n",miToken.simbolo);
 
-    // Si es un casos
+    // Si es un fin
     if(miToken.token == 1) {
         printf("PALABRA RESERVADA: %s\n",miToken.valor);
         printf("Comp: %d\n",strcmp(miToken.valor,"fin"));
@@ -287,9 +262,11 @@ int def_variables() {
                 if (miToken.token == 2) {
                     printf("SI - 4\n");
                     // HASTA AQUI,DAR DE ALTA EN LA TABLA DE SIMBOLOS
-                    // EL LEXICO SOLAMENTE DA TOKENS, NO HACE REGISTROS EN LA TABLA
-
                     // REGISTRAR
+                    insertarRegistro(addrTabla,"Variable",nombre,tipo,"Global");
+                    imprimirListaLigada();
+                    addrTabla++;
+
                     return def_variables();
 
                 }
@@ -1747,7 +1724,7 @@ struct Entrada daToken() {
 
 
 // Funcion para insertar un nuevo registro en la Tabla de Simbolos
-void insertarRegistro(char symbol[], char type[], int addr){
+void insertarRegistro(int addr, char token[], char symbol[], char type[], char scope[]){
     
 
     //Llamar funcion buscaRegistro para asegurar que no haya repeticion
@@ -1763,8 +1740,11 @@ void insertarRegistro(char symbol[], char type[], int addr){
         p = malloc(sizeof(struct TablaSimbolos));
 
         //Cargar datos a la estructura
-        strcpy(p->symbol,symbol);
-        strcpy(p->type,type);
+        strcpy(p->simbolo,symbol);
+        strcpy(p->tipo,type);
+        strcpy(p->scope,scope);
+        strcpy(p->token,token);
+
         p->addr = addr;
     
         //Ajustar los apuntadores de la Lista Ligada
@@ -1796,10 +1776,10 @@ void imprimirListaLigada()
     #ifdef DDEBUG
         printf("Current Address: %p\n",&p);
     #endif
-    printf("\n\tADDRESS\t\tSYMBOL\t\tTYPE\n");
+    printf("\n\tDIRECCION\t\tTOKEN\t\tID\t\tTIPO\t\t\tSCOPE\n");
     //Recorrer cada elemento de la lista ligada e imprimir sus atributos
     for(i=0;i<size;i++) {
-        printf("\t%d\t\t%s\t\t%s\n",p->addr,p->symbol,p->type);
+        printf("\t%d\t\t\t%s\t%s\t\t%s\t\t\t%s\n",p->addr,p->token,p->simbolo,p->tipo,p->scope);
         p = p->next;
     }
     printf("\n\n");
@@ -1814,7 +1794,7 @@ int buscaRegistro(char symbol[])
     p = first;
     //Iterar cada elemento de la lista ligada y compara el parametro ingresado con el atributo deseado
     for(i=0;i<size;i++) {
-        if(strcmp(p->symbol,symbol)==0)
+        if(strcmp(p->simbolo,symbol)==0)
             flag=1;
         p = p->next;
     }

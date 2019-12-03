@@ -1,13 +1,15 @@
 inicio
 entero x = 5;
+entero y = 4;
+entero z = 3;
 fin;
-entero funcion mifunc ( real b fin; ){
-entero a = 1;
+entero funcion mifunc ( real d fin; ){
+entero b = 1;
 fin;
-c = 2;
+d = 2;
 regresa b;
 };
 hacer { 
-k = 7 fin; 
-} mientras ( a < 2 );
+z = 0 fin; 
+} mientras ( y < x );
 fin;
