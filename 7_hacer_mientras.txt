@@ -3,12 +3,7 @@ entero x = 5;
 entero y = 4;
 entero z = 3;
 fin;
-entero funcion mifunc ( real d fin; ){
-entero b = 1;
-fin;
-d = 2;
-regresa b;
-};
+null;
 hacer { 
 z = 0 fin; 
 } mientras ( y < x );

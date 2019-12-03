@@ -2,12 +2,7 @@ inicio
 entero x = 5;
 entero a = 2;
 fin;
-entero funcion mifunc ( real d fin; ){
-entero b = 1;
-fin;
-d = 2;
-regresa b;
-}
+null;
 casos ( a ){
 caso 1 {
 x = 9;

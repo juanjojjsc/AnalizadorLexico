@@ -3,12 +3,7 @@ entero x = 5;
 entero y = 4;
 entero z = 3;
 fin;
-entero funcion mifunc ( real b fin; ){
-entero a = 1;
-fin;
-c = 5;
-regresa b;
-};
+null;
 mientras ( y < x ){ 
 z = 0 fin; 
 }

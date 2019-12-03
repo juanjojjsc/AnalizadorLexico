@@ -1,9 +1,0 @@
-inicio
-entero e = 2;
-real r = 3.14;
-caracter c = '$';
-booleano b = V;
-fin;
-null;
-null;
-fin;
